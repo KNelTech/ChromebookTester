@@ -17,6 +17,11 @@ header {
   height: 100vh; /* This will make the height of the header 100% of the viewport height */
   overflow: auto;
 }
+
+#logo {
+text-align: center;
+}
+
 .key {
   border: 1px solid #60279e;
   border-radius: 8px;
@@ -48,6 +53,7 @@ header {
   margin: 5px auto 0;
   width: 1264px;
   position: relative;
+  border-radius: 10px;
 }
 .header-gap {
   width: 1264px;
@@ -59,24 +65,14 @@ header {
   display: inline-block;
   margin: 0 90px;
 }
-.keyboard-bg-blur {
-  background: rgba(0, 0, 0, 0.473) url(../img/background.jpg) no-repeat scroll
-    center 51%;
-  filter: blur(60px);
-  height: 85%;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-}
 .keyboard-bg-fade {
   background-color: #000;
   height: 85%;
-  opacity: 0.8;
+  opacity: 0.95;
   position: absolute;
   width: 100%;
   z-index: 2;
+  border-radius: 20px;  
 }
 .content {
   height: 100%;

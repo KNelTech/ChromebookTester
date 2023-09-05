@@ -1,7 +1,7 @@
 @font-face {
   font-family: Helvetica;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 900;
   src: url(../css/helvthin.otf);
 }
 body {
@@ -62,8 +62,8 @@ header {
 .keyboard-bg-blur {
   background: rgba(0, 0, 0, 0.473) url(../img/background.jpg) no-repeat scroll
     center 51%;
-  filter: blur(50px);
-  height: 100%;
+  filter: blur(60px);
+  height: 85%;
   margin: 0;
   padding: 0;
   position: absolute;
@@ -94,18 +94,7 @@ keyboard-header {
   border: 1px solid #60279E;
   border-radius: 8px;
 }
-.keyOutput {
-  border: 1px solid #008b8b;
-  border-radius: 8px;
-  color: #008b8b;
-  display: inline-block;
-  font-size: 16px;
-  height: 30px;
-  text-align: center;
-  width: 120px;
-  margin: 7px 0;
-  font-family: consolas;
-}
+
 .keyOutput > p {
   margin-top: 5px;
 }
@@ -292,6 +281,7 @@ keyboard-header {
   margin: 11px 0;
   transform: rotate(180deg);
 }
+
 .key.arrowDown > p {
   font-size: 26px;
   margin: 14px 0 14px 5px;
@@ -318,39 +308,4 @@ h1 {
   top: 0.2em;
   box-shadow: 0 0 0 0.05em #000;
 }
-.key.enter.active span,
-.key.enter.press span {
-  background-position: -24px -13px;
-}
-.sliding_text_info {
-  background-color: rgba(2, 12, 20, 0.8);
-  bottom: 0;
-  color: rgba(0, 139, 139, 0.658);
-  font-size: 14px;
-  font-weight: 700;
-  left: 0;
-  padding: 10px;
-  right: 0;
-  z-index: 200;
-  font-family: consolas;
-}
-.footer-text {
-  background-color: #000;
-  bottom: 0;
-  color: #2f4f4f;
-  font-size: 15px;
-  font-weight: 700;
-  left: 0;
-  padding: 16px;
-  position: fixed;
-  right: 0;
-  z-index: 10;
-  text-align: center;
-  font-family: consolas;
-}
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 1px;
-}
+

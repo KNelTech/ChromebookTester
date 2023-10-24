@@ -1,4 +1,4 @@
-# vivKeyTestProto!
+# Vivacity Key Test Prototype!
 This is the prototype for my vivacity key tester! 
 It's pretty simple, load the page and then press the keys. Easy!
 Give it a try here! https://kneltech.github.io/

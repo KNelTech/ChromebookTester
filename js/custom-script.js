@@ -6,7 +6,6 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-
 document.addEventListener('mousedown', function(event) {
   event.preventDefault();
   var key = event.button;
@@ -17,12 +16,6 @@ document.addEventListener('contextmenu', function(event) {
   event.preventDefault();
 });
 
-document.addEventListener('keydown', function(event) {
-  event.preventDefault();
-  var key1 = event.code;
-  document.querySelector('y').textContent = key1;
-});
-
 window.addEventListener('wheel', function(event) {
   event.preventDefault();
   var delta = event.deltaY;
@@ -31,7 +24,7 @@ window.addEventListener('wheel', function(event) {
   } else {
       handleScroll('scrollUp', 'active', 'press');
   }
-});
+}, {passive: false});
 
 function handleKey(key, key_pos, addClass, removeClass) {
   var element;
@@ -43,7 +36,6 @@ function handleKey(key, key_pos, addClass, removeClass) {
   if (element) {
       element.classList.remove(removeClass);
       element.classList.add(addClass);
-      keyNameDisplay(KeyNamelist(key));
   }
 }
 
@@ -52,7 +44,6 @@ function handleMouse(key, addClass, removeClass) {
   if (element) {
       element.classList.remove(removeClass);
       element.classList.add(addClass);
-      keyNameDisplay(KeyNamelist(key));
   }
 }
 

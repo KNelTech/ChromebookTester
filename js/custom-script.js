@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-  load();
-});
-
 document.addEventListener('keydown', function(event) {
   event.preventDefault();
   var key = event.keyCode;

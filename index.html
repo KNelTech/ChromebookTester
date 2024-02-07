@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<meta name="robots" content="all" />
-	<meta property="og:title" content="Online Keyboard & Mouse Tester" />
-	<meta property="og:description" content="An Online Testing Utility that helps you to test all keys on 
-	your keyboard. Works accurately with any keyboard and any browser" />	
-	<meta name="description" content="Online Keyboard & Mouse Tester" />
-	<meta name="keywords" content="mouse,checker,test, keyboard, button, online, key-test, keys" />
-	<link rel="shortcut icon" type="image/x-icon" href="img/keyboard (5).png" />
 	<title>Keyboard & Mouse Tester</title>
+	<meta name="description" content="Online Keyboard & Mouse Tester" />
+	<link rel="shortcut icon" type="image/x-icon" href="./img/favIcon.png" />
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 	<link rel="stylesheet" href="css/style.css" />
-	<script src="js/custom-script.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-		crossorigin="anonymous" />
-	</head>
-<body>
-	<header>
-		<div class="header-gap">
-			<img id="logo" src="../img/logo.jpeg" alt="logo">
-		</div>
-		
-		<div class="keyboard-body">
-			<div class="keyboard-bg-blur"></div>
-			<div class="keyboard-bg-fade"></div>
-			<div class="content">
-				<br />
-				<div class="keyboard-section">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body id="mainBody">
+
+	<div id="logoContainer">
+		<img id="logoImage" src="./img/logo.png">
+	</div>
+
+	<div id="kbContainer">
+		<div id="kbLayout">
+
+			<div id="kbLayoutInner">
+
+				<div class="rowOne">
 					<div class="keyFunc key27">
-						<p>ESC</p>
+						<p>Esc</p>
 					</div>
 					<div class="keyFunc key112">
 						<p>F1</p>
@@ -67,38 +59,40 @@
 					<div class="keyFunc key123">
 						<p>F12</p>
 					</div>
-					<div class="keyFunc key19" style="font-size: 10px">
+					<div class="keyFunc key19">
 						<p>
-							Pause <br />
-							break
+							Pause
 						</p>
 					</div>
 					<div class="keyFunc key44">
-						<p>prt sc</p>
+						<p>Print</p>
 					</div>
 					<div class="keyFunc key46">
-						<p>del</p>
+						<p>Del</p>
 					</div>
 					<div class="keyFunc key36">
-						<p>home</p>
+						<p>Home</p>
 					</div>
 					<div class="keyFunc key33">
-						<p>pgup</p>
+						<p>PgUp</p>
 					</div>
 					<div class="keyFunc key34">
-						<p>pgdn</p>
+						<p>PgDn</p>
 					</div>
 					<div class="keyFunc key145">
-						<p>scr lk</p>
+						<p>Scr lk</p>
 					</div>
 					<div class="keyFunc key45">
-						<p>ins</p>
+						<p>Ins</p>
 					</div>
 					<div class="keyFunc key35">
-						<p>end</p>
+						<p>End</p>
 					</div>
-					<div class="key delKey key192">
-						<p style="font-size: 40px">`</p>
+				</div>
+
+				<div class="rowTwo">
+					<div class="key key192">
+						<p>`</p>
 					</div>
 					<div class="key key49">
 						<p>1</p>
@@ -130,26 +124,17 @@
 					<div class="key key48">
 						<p>0</p>
 					</div>
-					<div class="key delKey minSize key173 key189">
+					<div class="key minSize key173 key189">
 						<p>_<br />-</p>
 					</div>
-					<div class="key delKey plusKey key61 key187">
+					<div class="key plusKey key61 key187">
 						<p>+<br />=</p>
 					</div>
 					<div class="key backSpace key8">
-						<div class="mod" style="
-                  font-size: 14;
-                  margin-top: 20px;
-                  text-align: right;
-                  margin-right: 20px;
-                ">
-							back
-						</div>
-						<p>&#10229;</p>
+						<span>Backspace</span>
 					</div>
-					<div class="key areaGap gapWidth"></div>
-					<div class="key delKey key144">
-						<p>num lk</p>
+					<div class="key key144">
+						<p>Num Lock</p>
 					</div>
 					<div class="key key111">
 						<p>/</p>
@@ -157,11 +142,14 @@
 					<div class="key key106">
 						<p>*</p>
 					</div>
-					<div class="key delKey key109">
+					<div class="key key109">
 						<p>_</p>
 					</div>
+				</div>
+
+				<div class="rowThree">
 					<div class="key tab key9">
-						<p style="margin-left: 7px">tab ⇄</p>
+						<p>Tab ⇄</p>
 					</div>
 					<div class="key key81">
 						<p>Q</p>
@@ -202,7 +190,6 @@
 					<div class="key arithmeticKey backslash key220">
 						<p>\</p>
 					</div>
-					<div class="key areaGap gapWidth"></div>
 					<div class="key key103">
 						<p>7</p>
 					</div>
@@ -215,8 +202,11 @@
 					<div class="key plus key107">
 						<p>+</p>
 					</div>
+				</div>
+
+				<div class="rowFour">
 					<div class="key caps key20">
-						<p>caps lock</p>
+						<p>Caps Lock</p>
 					</div>
 					<div class="key key65">
 						<p>A</p>
@@ -252,17 +242,8 @@
 						<p>'</p>
 					</div>
 					<div class="key enter key13">
-						<div class="mod" style="
-                  font-size: 20px;
-                  margin-top: 20px;
-                  text-align: right;
-                  margin-right: 20px;
-                ">
-							enter
-						</div>
-						<p>⬑</p>
+						<p>Enter</p>
 					</div>
-					<div class="key areaGap gapWidth"></div>
 					<div class="key key100">
 						<p>4</p>
 					</div>
@@ -272,8 +253,14 @@
 					<div class="key key102">
 						<p>6</p>
 					</div>
+					<div class="key enterRight keyPosNumpadEnter">
+						<p>Enter</p>
+					</div>
+				</div>
+
+				<div class="rowFive">
 					<div class="key shiftLeft key16">
-						<p>shift ⇧</p>
+						<p>Shift</p>
 					</div>
 					<div class="key key90">
 						<p>Z</p>
@@ -306,12 +293,11 @@
 						<p>/</p>
 					</div>
 					<div class="key shiftRight keyPosShiftRight">
-						<p style="text-align: right; margin-right: 10px">⇧ shift</p>
+						<p>Shift</p>
 					</div>
 					<div class="key arrowUp key38">
-						<p>➤</p>
+						<p>↑</p>
 					</div>
-					<div class="key areaGap gapWidth"></div>
 					<div class="key key97">
 						<p>1</p>
 					</div>
@@ -321,41 +307,40 @@
 					<div class="key key99">
 						<p>3</p>
 					</div>
-					<div class="key enterRight keyPosNumpadEnter">
-						<p>enter</p>
-					</div>
+				</div>
+
+				<div class="rowSix">
 					<div class="key ctrl1 key17">
-						<p style="margin-left: 7px">ctrl</p>
+						<p>Ctrl</p>
 					</div>
 					<div class="key wndw key91">
-						<p style="font-size: 22px">
+						<p>
 							<i class="fa fa-windows" aria-hidden="true"></i>
 						</p>
 					</div>
 					<div class="key alt key18">
-						<p>alt</p>
+						<p>Alt</p>
 					</div>
 					<div class="key space key32"></div>
 					<div class="key alt keyPosAltRight">
-						<p>alt gr</p>
+						<p>Alt</p>
 					</div>
 					<div class="key cont key93">
-						<p style="font-size: 28px">
+						<p>
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</p>
 					</div>
 					<div class="key ctrl2 keyPosControlRight">
-						<p style="text-align: right; margin-right: 10px">ctrl</p>
+						<p>Ctrl</p>
 					</div>
 					<div class="key arrowLeft key37">
-						<p>➤</p>
+						<p>←</p>
 					</div>
 					<div class="key arrowDown key40">
-						<p>➤</p>
+						<p>↓</p>
 					</div>
-					<div class="key areaGap gapWidth"></div>
 					<div class="key arrowRight key39">
-						<p style="transform: rotate(-0deg)">➤</p>
+						<p>→</p>
 					</div>
 					<div class="key key96">
 						<p>0</p>
@@ -363,23 +348,32 @@
 					<div class="key key110">
 						<p><b>.</b></p>
 					</div>
-					<br /><br />
-					<div class="mouse-section">
+				</div>
+
+				<div class="mouseContainer">
+
+					<div class="mouseTop">
 						<div class="key lclick key0"></div>
 						<div class="key cclick key1"></div>
 						<div class="key rclick key2"></div>
 					</div>
-					<div class="mouse-section">
+					<div class="mouseBtn">
 						<div class="key scrollUp">▲</div>
-						<div class="key divider"></div>
+
 						<div class="key scrollDown">▼</div>
 					</div>
 				</div>
-				
-				</div>
-			</div>
-		</div>
-	</header>
-</body>
 
+			</div>
+
+			<div id="webcamContainer">
+				<button id="webcamTest">Test Webcam</button>
+				<video id="video" width="640" height="480" autoplay style="display:none;"></video>
+				<!-- <canvas id="canvas" width="640" height="480" style="display:none;"></canvas> -->
+			</div>
+
+		</div>
+	</div>
+	<script src="js/script.js"></script>
+</body>
 </html>

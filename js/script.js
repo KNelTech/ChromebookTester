@@ -6,8 +6,8 @@
  * @return {string} selector based on the key position and code
  */
 function getKeySelector(keyPos, keyCode) {
-  const specialKeys = ['NumpadEnter', 'ShiftRight', 'ControlRight', 'AltRight'];
-  return specialKeys.includes(keyPos) ? '.keyPos' + keyPos : '.key' + keyCode;
+  const specialKeys = ["NumpadEnter", "ShiftRight", "ControlRight", "AltRight"];
+  return specialKeys.includes(keyPos) ? ".keyPos" + keyPos : ".key" + keyCode;
 }
 
 /**
@@ -18,61 +18,86 @@ function getKeySelector(keyPos, keyCode) {
  * @param {string} removeClass - The class to be removed from the element
  */
 function updateElementClass(selector, addClass, removeClass) {
-  const element = document.querySelector(selector);
-  if (element) {
-    element.classList.remove(removeClass);
-    element.classList.add(addClass);
+  try {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.classList.remove(removeClass);
+      element.classList.add(addClass);
+    } else {
+      console.warn(`Element with selector "${selector}" not found.`);
+    }
+  } catch (error) {
+    console.error("Error updating element class:", error);
   }
 }
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener("keydown", function (e) {
   e.preventDefault();
   const keySelector = getKeySelector(e.code, e.keyCode);
-  updateElementClass(keySelector, 'press', 'active');
+  updateElementClass(keySelector, "press", "active");
+  console.log(`Key pressed: ${e.key}`);
 });
 
-document.addEventListener('mousedown', function(e) {
+document.addEventListener("mousedown", function (e) {
   e.preventDefault();
-  const mouseSelector = '.key' + e.button;
-  updateElementClass(mouseSelector, 'press', 'active');
+  const mouseSelector = ".key" + e.button;
+  updateElementClass(mouseSelector, "press", "active");
 });
 
-document.addEventListener('contextmenu', function(e) {
+document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
-window.addEventListener('wheel', function(e) {
-  e.preventDefault();
-  const scrollSelector = e.deltaY > 0 ? '.scrollDown' : '.scrollUp';
-  updateElementClass(scrollSelector, 'active', 'press');
-}, {passive: false});
+window.addEventListener(
+  "wheel",
+  function (e) {
+    e.preventDefault();
+    const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
+    updateElementClass(scrollSelector, "active", "press");
+  },
+  { passive: false }
+);
 
-
-document.addEventListener('DOMContentLoaded', function () {
-  window.addEventListener('resize', debounce(handleResize, 10)); // Debounce the resize event
+document.addEventListener("DOMContentLoaded", function () {
+  window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event
   handleResize(); // Initial resizing
 });
 
 function handleResize() {
-  const keyboardWrapper = document.getElementById('kbContainer');
-  const keyboardBody = document.getElementById('kbLayout');
+  try {
+    // Get the width of the keyboard container
+    const keyboardWrapper = document.getElementById("kbContainer");
+    const keyboardBody = document.getElementById("kbLayout");
 
-  const myWidth = keyboardBody.clientWidth;
-  const windowWidth = document.documentElement.clientWidth;
-  const myPercentage = myWidth / windowWidth;
+    if (!keyboardWrapper || !keyboardBody) {
+      console.warn("Keyboard elements not found.");
+      return;
+    }
 
-  if (myPercentage > 1) {
-    const newPercentage = Math.min(0.95, windowWidth / myWidth);
-    scaleKeyboard(keyboardWrapper, newPercentage);
-    scaleKeyboard(keyboardBody, newPercentage);
-  } else {
-    scaleKeyboard(keyboardWrapper, 1); // Reset scaling if not needed
-    scaleKeyboard(keyboardBody, 1);
+    // Get the width of the window
+    const myWidth = keyboardBody.clientWidth;
+    const windowWidth = document.documentElement.clientWidth;
+
+    if (isNaN(myWidth) || isNaN(windowWidth) || windowWidth === 0) {
+      console.error("Invalid dimensions.");
+      return;
+    }
+
+    // Scale the keyboard
+    const myPercentage = myWidth / windowWidth;
+    if (myPercentage > 1) {
+      const newPercentage = Math.min(0.95, (windowWidth / myWidth) * 0.95);
+      scaleKeyboard(keyboardWrapper, newPercentage);
+    } else {
+      scaleKeyboard(keyboardWrapper, 1); // Reset scaling if not needed
+    }
+  } catch (error) {
+    console.error("Error handling resize:", error);
   }
 }
 
 function scaleKeyboard(element, percentage) {
-  element.style.transform = `scale(${percentage}) translate(-1%, 1%)`;  // Scale and translate the element
+  element.style.transform = `scale(${percentage})`; // Scale and translate the element
 }
 
 function debounce(func, delay) {
@@ -84,24 +109,36 @@ function debounce(func, delay) {
 }
 
 // Webcam
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
+const video = document.getElementById("video");
 
 function webcamAccess() {
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function (stream) {
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch(function (error) {
-        console.error('Error accessing webcam:', error);
-      });
+  // Ensure the video element exists
+  const video = document.getElementById('video');
+  if (!video) {
+    console.error("Video element not found.");
+    return;
   }
 
-  video.style.display = "block";
-  // canvas.style.display = "block";
+  // Check if getUserMedia method is available
+  if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(function (stream) {
+        video.srcObject = stream;
+        video.play().catch(function (playError) {
+          // Handle potential errors that might occur when trying to play the video
+          console.error("Error attempting to play video:", playError);
+        });
+        video.style.display = "block"; // Only display the video element if access is granted
+      })
+      .catch(function (error) {
+        console.error("Error accessing webcam:", error);
+      });
+  } else {
+    console.error("getUserMedia not supported by this browser.");
+  }
 }
+
 
 const webcamTest = document.getElementById("webcamTest");
 webcamTest.addEventListener("click", function () {
@@ -109,10 +146,10 @@ webcamTest.addEventListener("click", function () {
 });
 
 // Cleanup webcam when done
-window.addEventListener('beforeunload', function () {
+window.addEventListener("beforeunload", function () {
   const stream = video.srcObject;
   if (stream) {
     const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
+    tracks.forEach((track) => track.stop());
   }
 });

@@ -153,3 +153,26 @@ window.addEventListener("beforeunload", function () {
     tracks.forEach((track) => track.stop());
   }
 });
+
+// Mic Test
+async function handleMicAccess() {
+  try {
+    // Check if getUserMedia method is available
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.log('getUserMedia not supported by this browser.');
+      return; // Exit the function if getUserMedia is not supported
+    }
+
+    // Request microphone access
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    console.log('Microphone access granted');
+
+    // Use the stream
+    const audioContext = new AudioContext();
+    const source = audioContext.createMediaStreamSource(stream);
+    source.connect(audioContext.destination); // Connecting the audio directly to the speakers for local testing
+  } catch (error) {
+    console.error('Error accessing the microphone or processing audio', error);
+  }
+}
+document.getElementById('micTest').addEventListener('click', handleMicAccess);

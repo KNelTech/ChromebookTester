@@ -188,8 +188,8 @@ async function handleMicAccess() {
 const micTest = document.getElementById("micTest");
 micTest.addEventListener("click", handleMicAccess);
 
+// Stops the stream, removes the audio element
 const audioTestStop = document.getElementById('micTestStop');
-// Stop the stream when the button is clicked
 audioTestStop.addEventListener("click", function () {
   streamTest.getTracks().forEach(function (track) {
     track.stop();
@@ -205,51 +205,51 @@ const stopRecordingButton = document.getElementById('stopRecording');
 let mediaRecorder;
 let recordedChunks = [];
 
-async function handleMicRecording() {
+function setupMediaRecorder(stream) {
   recordedChunks = [];
-    // Check if MediaRecorder is supported
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-          .then((stream) => {
-              mediaRecorder = new MediaRecorder(stream);
 
-              // Listen for dataavailable event to collect chunks
-              mediaRecorder.addEventListener('dataavailable', (event) => {
-                  if (event.data.size > 0) {
-                      recordedChunks.push(event.data);
-                  }
-              });
+  mediaRecorder = new MediaRecorder(stream);
 
-              // Listen for stop event to create a new audio element with the recorded content
-              mediaRecorder.addEventListener('stop', () => {
-                  const recordedBlob = new Blob(recordedChunks, { type: 'audio/wav' });
-                  const recordedUrl = URL.createObjectURL(recordedBlob);
-
-                  // Create a new audio element for playback
-                  const playbackAudioElement = new Audio(recordedUrl);
-                  playbackAudioElement.controls = true;
-
-                  // Replace the existing audio element with the new one
-                  audioRecord.parentNode.replaceChild(playbackAudioElement, audioRecord);
-                  audioRecord = playbackAudioElement; // Update reference to the new audio element
-              });
-
-              // Start recording
-              mediaRecorder.start();
-          })
-          .catch((error) => {
-              console.error('Error accessing microphone:', error);
-          });
-  } else {
-      console.error('MediaRecorder is not supported in this browser.');
-  }
-
-}
-startRecordingButton.addEventListener('click', handleMicRecording)
-
-// Handle the stop recording button click
-stopRecordingButton.addEventListener('click', () => {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        mediaRecorder.stop();
+  mediaRecorder.addEventListener('dataavailable', (e) => {
+    if (e.data.size > 0) {
+      recordedChunks.push(e.data);
     }
-});
+  });
+
+  mediaRecorder.addEventListener('stop', () => {
+    const recordedBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+    const recordedUrl = URL.createObjectURL(recordedBlob);
+
+    replaceAudioElement(recordedUrl);
+  });
+
+  mediaRecorder.start();
+}
+
+function replaceAudioElement(srcUrl) {
+  const audioRecordElement = document.getElementById('audioTest');
+  audioRecordElement.src = srcUrl;
+  audioRecordElement.style.display = 'block';
+}
+
+async function handleMicRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    if (stream) {
+      setupMediaRecorder(stream);
+    } else {
+      console.error('Failed to get microphone stream.');
+    }
+  } catch (error) {
+    console.error('Error accessing microphone:', error);
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+  }
+}
+
+startRecordingButton.addEventListener('click', handleMicRecording);
+stopRecordingButton.addEventListener('click', stopRecording);

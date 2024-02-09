@@ -227,7 +227,7 @@ function setupMediaRecorder(stream) {
 }
 
 function replaceAudioElement(srcUrl) {
-  const audioRecordElement = document.getElementById('audioTest');
+  const audioRecordElement = document.getElementById('audioRecord');
   audioRecordElement.src = srcUrl;
   audioRecordElement.style.display = 'block';
 }

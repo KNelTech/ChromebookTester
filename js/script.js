@@ -39,7 +39,6 @@ document.addEventListener("keydown", function (e) {
 });
 
 document.addEventListener("mousedown", function (e) {
-  e.preventDefault();
   const mouseSelector = ".key" + e.button;
   updateElementClass(mouseSelector, "press", "active");
 });
@@ -51,7 +50,6 @@ document.addEventListener("contextmenu", function (e) {
 window.addEventListener(
   "wheel",
   function (e) {
-    e.preventDefault();
     const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
     updateElementClass(scrollSelector, "active", "press");
   },
@@ -113,14 +111,17 @@ const video = document.getElementById("video");
 
 function webcamAccess() {
   // Ensure the video element exists
-  const video = document.getElementById('video');
+  const video = document.getElementById("video");
   if (!video) {
     console.error("Video element not found.");
     return;
   }
 
   // Check if getUserMedia method is available
-  if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+  if (
+    navigator.mediaDevices &&
+    typeof navigator.mediaDevices.getUserMedia === "function"
+  ) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function (stream) {
@@ -139,7 +140,6 @@ function webcamAccess() {
   }
 }
 
-
 const webcamTest = document.getElementById("webcamTest");
 webcamTest.addEventListener("click", function () {
   webcamAccess();
@@ -154,25 +154,102 @@ window.addEventListener("beforeunload", function () {
   }
 });
 
+
 // Mic Test
+let streamTest;
+const audioTest = document.getElementById('audioTest');
 async function handleMicAccess() {
   try {
     // Check if getUserMedia method is available
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      console.log('getUserMedia not supported by this browser.');
-      return; // Exit the function if getUserMedia is not supported
+      console.log("getUserMedia not supported by this browser.");
+      return;
     }
 
     // Request microphone access
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    console.log('Microphone access granted');
+    streamTest = await navigator.mediaDevices.getUserMedia({ audio: true });
+    console.log("Microphone access granted");
 
-    // Use the stream
+    audioTest.style.display = "block";
+  
+    // Use the stream 
     const audioContext = new AudioContext();
-    const source = audioContext.createMediaStreamSource(stream);
-    source.connect(audioContext.destination); // Connecting the audio directly to the speakers for local testing
+    const source = audioContext.createMediaStreamSource(streamTest);
+
+    source.connect(audioContext.destination);
+    audioTest.srcObject = streamTest;
+
+    console.log(streamTest);
+
   } catch (error) {
-    console.error('Error accessing the microphone or processing audio', error);
+    console.error("Error accessing the microphone or processing audio", error);
   }
 }
-document.getElementById('micTest').addEventListener('click', handleMicAccess);
+const micTest = document.getElementById("micTest");
+micTest.addEventListener("click", handleMicAccess);
+
+// Stops the stream, removes the audio element
+const audioTestStop = document.getElementById('micTestStop');
+audioTestStop.addEventListener("click", function () {
+  streamTest.getTracks().forEach(function (track) {
+    track.stop();
+    audioTest.style.display = "none";
+  });
+});
+
+
+// Recording
+let audioRecord = document.getElementById('audioRecord');
+const startRecordingButton = document.getElementById('startRecording');
+const stopRecordingButton = document.getElementById('stopRecording');
+let mediaRecorder;
+let recordedChunks = [];
+
+function setupMediaRecorder(stream) {
+  recordedChunks = [];
+
+  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder.addEventListener('dataavailable', (e) => {
+    if (e.data.size > 0) {
+      recordedChunks.push(e.data);
+    }
+  });
+
+  mediaRecorder.addEventListener('stop', () => {
+    const recordedBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+    const recordedUrl = URL.createObjectURL(recordedBlob);
+
+    replaceAudioElement(recordedUrl);
+  });
+
+  mediaRecorder.start();
+}
+
+function replaceAudioElement(srcUrl) {
+  const audioRecordElement = document.getElementById('audioTest');
+  audioRecordElement.src = srcUrl;
+  audioRecordElement.style.display = 'block';
+}
+
+async function handleMicRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    if (stream) {
+      setupMediaRecorder(stream);
+    } else {
+      console.error('Failed to get microphone stream.');
+    }
+  } catch (error) {
+    console.error('Error accessing microphone:', error);
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+  }
+}
+
+startRecordingButton.addEventListener('click', handleMicRecording);
+stopRecordingButton.addEventListener('click', stopRecording);

@@ -199,7 +199,7 @@ audioTestStop.addEventListener("click", function () {
 
 
 // Recording
-let audioRecord = document.getElementById('audioRecord');
+const audioRecord = document.getElementById('audioRecord');
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');
 let mediaRecorder;
@@ -227,9 +227,8 @@ function setupMediaRecorder(stream) {
 }
 
 function replaceAudioElement(srcUrl) {
-  const audioRecordElement = document.getElementById('audioRecord');
-  audioRecordElement.src = srcUrl;
-  audioRecordElement.style.display = 'block';
+  audioRecord.src = srcUrl;
+  audioRecord.style.display = 'block';
 }
 
 async function handleMicRecording() {

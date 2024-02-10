@@ -1,28 +1,24 @@
 /**
- * Returns a selector based on the key position and code.
+ * Returns a selector based on the key code.
  *
- * @param {number} keyPos - the position of the key
  * @param {string} keyCode - the code of the key
- * @return {string} selector based on the key position and code
+ * @return {string} selector based on the key code
  */
-function getKeySelector(keyPos, keyCode) {
+function getKeySelector(keyCode) {
   const specialKeys = ["NumpadEnter", "ShiftRight", "ControlRight", "AltRight"];
-  return specialKeys.includes(keyPos) ? ".keyPos" + keyPos : ".key" + keyCode;
+  return specialKeys.includes(keyCode) ? `.key.${keyCode}` : `.key.${keyCode}`;
 }
 
 /**
- * Updates the class of the specified element by adding and removing classes.
+ * Updates the class of the specified element by adding the 'active' class.
  *
  * @param {string} selector - The CSS selector for the element to be updated
- * @param {string} addClass - The class to be added to the element
- * @param {string} removeClass - The class to be removed from the element
  */
-function updateElementClass(selector, addClass, removeClass) {
+function updateElementClass(selector) {
   try {
     const element = document.querySelector(selector);
     if (element) {
-      element.classList.remove(removeClass);
-      element.classList.add(addClass);
+      element.classList.add("active");
     } else {
       console.warn(`Element with selector "${selector}" not found.`);
     }
@@ -33,28 +29,25 @@ function updateElementClass(selector, addClass, removeClass) {
 
 document.addEventListener("keydown", function (e) {
   e.preventDefault();
-  const keySelector = getKeySelector(e.code, e.keyCode);
-  updateElementClass(keySelector, "press", "active");
+  const keySelector = getKeySelector(e.code); // Use e.code for consistency and accuracy
+  updateElementClass(keySelector);
   console.log(`Key pressed: ${e.key}`);
 });
 
 document.addEventListener("mousedown", function (e) {
-  const mouseSelector = ".key" + e.button;
-  updateElementClass(mouseSelector, "press", "active");
+  const mouseSelector = `.key.Mouse${e.button}`;
+  updateElementClass(mouseSelector);
 });
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
-window.addEventListener(
-  "wheel",
-  function (e) {
-    const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
-    updateElementClass(scrollSelector, "active", "press");
-  },
-  { passive: false }
-);
+window.addEventListener("wheel", function (e) {
+  const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
+  updateElementClass(scrollSelector);
+}, { passive: false });
+
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event

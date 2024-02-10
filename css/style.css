@@ -96,13 +96,9 @@
 }
 
 #testBtns > button {
-  width: 160px;
+  width: 150px;
   background-color: transparent;
-  border: none;
-  box-shadow: 0 0 4px 1px #60279e;
-  border-radius: 25px;
-  padding: 5px;
-  
+  border: none
 }
 
 #testBtns > button:active {
@@ -112,13 +108,10 @@
 #testBtns > button > span {
   color: #ddd;
   font-size: 18px;
-  font-weight: bold;
-}
-#testBtns > button:hover > span {
-  color: green
+  font-weight: bold
 }
 
-#testBtns #startRecording:hover > span {
+#testBtns > button:hover > span {
   color: green
 }
 
@@ -136,12 +129,6 @@
   width: 640px;
   height: 480px
 }
-
-#testingContainer > button {
-  width: 115px
-}
-
-
 
 .key.lclick {
   border-radius: 55px 0 0 0;
@@ -295,4 +282,3 @@
 .key144 {
   font-size: 15px
 }
-

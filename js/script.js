@@ -61,6 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
   handleResize(); // Initial resizing
 });
 
+
+/*
+**  Resizes the keyboard to fit the window.
+*/
 function handleResize() {
   try {
     // Get the width of the keyboard container
@@ -93,24 +97,11 @@ function handleResize() {
     console.error("Error handling resize:", error);
   }
 }
-/**
- * Scales the keyboard element by the given percentage.
- *
- * @param {Element} element - the element to be scaled
- * @param {number} percentage - the percentage by which the element should be scaled
- * @return {void} 
- */
+
 function scaleKeyboard(element, percentage) {
   element.style.transform = `scale(${percentage})`; // Scale and translate the element
 }
 
-/**
- * Creates a debounced function that delays invoking `func` until after `delay` milliseconds have elapsed since the last time the debounced function was invoked.
- *
- * @param {Function} func - The function to debounce.
- * @param {number} delay - The number of milliseconds to delay.
- * @return {Function} The debounced function.
- */
 function debounce(func, delay) {
   let timeoutId;
   return function () {
@@ -119,7 +110,10 @@ function debounce(func, delay) {
   };
 }
 
-// Webcam
+
+/*
+**  Webcam
+*/
 const video = document.getElementById("video");
 
 function webcamAccess() {
@@ -166,7 +160,52 @@ window.addEventListener("beforeunload", function () {
 });
 
 
-// Mic Test Recording
+// // Mic Test
+// let streamTest;
+// const audioTest = document.getElementById('audioTest');
+// async function handleMicAccess() {
+//   try {
+//     // Check if getUserMedia method is available
+//     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+//       console.log("getUserMedia not supported by this browser.");
+//       return;
+//     }
+
+//     // Request microphone access
+//     streamTest = await navigator.mediaDevices.getUserMedia({ audio: true });
+//     console.log("Microphone access granted");
+
+//     audioTest.style.display = "block";
+  
+//     // Use the stream 
+//     const audioContext = new AudioContext();
+//     const source = audioContext.createMediaStreamSource(streamTest);
+
+//     source.connect(audioContext.destination);
+//     audioTest.srcObject = streamTest;
+
+//     console.log(streamTest);
+
+//   } catch (error) {
+//     console.error("Error accessing the microphone or processing audio", error);
+//   }
+// }
+// const micTest = document.getElementById("micTest");
+// micTest.addEventListener("click", handleMicAccess);
+
+// // Stops the stream, removes the audio element
+// const audioTestStop = document.getElementById('micTestStop');
+// audioTestStop.addEventListener("click", function () {
+//   streamTest.getTracks().forEach(function (track) {
+//     track.stop();
+//     audioTest.style.display = "none";
+//   });
+// });
+
+
+/*
+**  Recording
+*/
 const audioRecord = document.getElementById('audioRecord');
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');
@@ -194,6 +233,7 @@ function setupMediaRecorder(stream) {
   mediaRecorder.start();
   console.log('Audio recording in progress...');
 }
+
 
 /**
  * Replaces the source URL of the audio element and sets its display style to block.
@@ -233,4 +273,5 @@ function stopRecording() {
 
 startRecordingButton.addEventListener('click', handleMicRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
+
 console.log('%cHello there! 🌈 If you see this message, know that you are awesome!', 'background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;');

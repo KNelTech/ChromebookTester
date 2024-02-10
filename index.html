@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 	<title>Keyboard & Mouse Tester</title>
 	<meta name="description" content="Online Keyboard & Mouse Tester" />
-	<meta name="language" content="en-US" />
 	<link rel="shortcut icon" type="image/x-icon" href="./img/favIcon.png" />
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-	<script src="js/script.js" defer></script>
-	<script src="js/alert.js" defer></script>
 </head>
 <body id="mainBody">
 
@@ -372,21 +369,19 @@
 			<div id="testingContainer">
 				<div id="testBtns">
 					<button id="webcamTest"><span>Test Webcam</span></button>
+					<!-- <button id="micTest">Test Microphone</button> -->
+					<!-- <button id="micTestStop">Stop Test</button> -->
 					<button id="startRecording"><span>Start Recording</span></button>
 					<button id="stopRecording"><span>Stop Recording</span></button>
 				</div>
+				<!-- <audio id="audioTest" controls style="display:none"></audio> -->
 				<div id="recordingStatus" style="display:none"><span>Recording...</span></div>
 				<audio id="audioRecord" controls style="display:none"></audio>
 				<video id="video" autoplay style="display:none"></video>
 			</div>
-	 		<div id="alertContainer" style="display:none">
-    			<div id="alert">
-        			<h1 id="alertTitle"></h1>
-        			<span id="alertText"></p>
-        			<button id="alertBtn"></button>
-    			</div>
-			</div>
+
 		</div>
 	</div>
+	<script src="js/script.js"></script>
 </body>
 </html>

@@ -155,50 +155,7 @@ window.addEventListener("beforeunload", function () {
 });
 
 
-// Mic Test
-let streamTest;
-const audioTest = document.getElementById('audioTest');
-async function handleMicAccess() {
-  try {
-    // Check if getUserMedia method is available
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      console.log("getUserMedia not supported by this browser.");
-      return;
-    }
-
-    // Request microphone access
-    streamTest = await navigator.mediaDevices.getUserMedia({ audio: true });
-    console.log("Microphone access granted");
-
-    audioTest.style.display = "block";
-  
-    // Use the stream 
-    const audioContext = new AudioContext();
-    const source = audioContext.createMediaStreamSource(streamTest);
-
-    source.connect(audioContext.destination);
-    audioTest.srcObject = streamTest;
-
-    console.log(streamTest);
-
-  } catch (error) {
-    console.error("Error accessing the microphone or processing audio", error);
-  }
-}
-const micTest = document.getElementById("micTest");
-micTest.addEventListener("click", handleMicAccess);
-
-// Stops the stream, removes the audio element
-const audioTestStop = document.getElementById('micTestStop');
-audioTestStop.addEventListener("click", function () {
-  streamTest.getTracks().forEach(function (track) {
-    track.stop();
-    audioTest.style.display = "none";
-  });
-});
-
-
-// Recording
+// Mic Test Recording
 const audioRecord = document.getElementById('audioRecord');
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');

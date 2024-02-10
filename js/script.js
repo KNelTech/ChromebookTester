@@ -93,11 +93,24 @@ function handleResize() {
     console.error("Error handling resize:", error);
   }
 }
-
+/**
+ * Scales the keyboard element by the given percentage.
+ *
+ * @param {Element} element - the element to be scaled
+ * @param {number} percentage - the percentage by which the element should be scaled
+ * @return {void} 
+ */
 function scaleKeyboard(element, percentage) {
   element.style.transform = `scale(${percentage})`; // Scale and translate the element
 }
 
+/**
+ * Creates a debounced function that delays invoking `func` until after `delay` milliseconds have elapsed since the last time the debounced function was invoked.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} delay - The number of milliseconds to delay.
+ * @return {Function} The debounced function.
+ */
 function debounce(func, delay) {
   let timeoutId;
   return function () {
@@ -118,10 +131,7 @@ function webcamAccess() {
   }
 
   // Check if getUserMedia method is available
-  if (
-    navigator.mediaDevices &&
-    typeof navigator.mediaDevices.getUserMedia === "function"
-  ) {
+  if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function") {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function (stream) {
@@ -131,6 +141,7 @@ function webcamAccess() {
           console.error("Error attempting to play video:", playError);
         });
         video.style.display = "block"; // Only display the video element if access is granted
+        console.log('Webcam access granted.');
       })
       .catch(function (error) {
         console.error("Error accessing webcam:", error);
@@ -181,18 +192,30 @@ function setupMediaRecorder(stream) {
   });
 
   mediaRecorder.start();
+  console.log('Audio recording in progress...');
 }
 
+/**
+ * Replaces the source URL of the audio element and sets its display style to block.
+ *
+ * @param {string} srcUrl - The new source URL for the audio element.
+ */
 function replaceAudioElement(srcUrl) {
   audioRecord.src = srcUrl;
   audioRecord.style.display = 'block';
+  console.log('Audio recording finished.');
 }
 
+// Asynchronously handles microphone recording by accessing the device's media stream, 
+// setting up the media recorder, and updating the recording status display.
 async function handleMicRecording() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     if (stream) {
+      console.log('Microphone access granted.');
       setupMediaRecorder(stream);
+      recordingStatus.style.display = 'block';
+      audioRecord.style.display = 'none';
     } else {
       console.error('Failed to get microphone stream.');
     }
@@ -204,8 +227,10 @@ async function handleMicRecording() {
 function stopRecording() {
   if (mediaRecorder && mediaRecorder.state !== 'inactive') {
     mediaRecorder.stop();
+    recordingStatus.style.display = 'none';
   }
 }
 
 startRecordingButton.addEventListener('click', handleMicRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
+console.log('%cHello there! 🌈 If you see this message, know that you are awesome!', 'background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;');

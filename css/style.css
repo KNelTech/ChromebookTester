@@ -101,8 +101,7 @@
   border: none;
   box-shadow: 0 0 4px 1px #60279e;
   border-radius: 25px;
-  padding: 5px;
-  
+  padding: 5px
 }
 
 #testBtns > button:active {
@@ -112,14 +111,14 @@
 #testBtns > button > span {
   color: #ddd;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: bold
 }
 #testBtns > button:hover > span {
-  color: green
+  color: limegreen
 }
 
 #testBtns #startRecording:hover > span {
-  color: green
+  color: limegreen
 }
 
 #testBtns #stopRecording:hover > span {
@@ -141,24 +140,22 @@
   width: 115px
 }
 
-
-
-.key.lclick {
+.key.Mouse0 {
   border-radius: 55px 0 0 0;
   height: 70px;
   width: 96px
 }
 
-.key.rclick {
-  border-radius: 0 55px 0 0;
-  height: 70px;
-  width: 96px
-}
-
-.key.cclick {
+.key.Mouse1 {
   border-radius: 10px;
   height: 50px;
   width: 24px
+}
+
+.key.Mouse2 {
+  border-radius: 0 55px 0 0;
+  height: 70px;
+  width: 96px
 }
 
 .key.scrollUp,
@@ -169,8 +166,6 @@
 }
 
 .key {
-  color: #60279e;
-  display: flex;
   font-size: 18px;
   height: 52px;
   width: 50px;
@@ -178,8 +173,6 @@
 }
 
 .keyFunc {
-  color: #60279e;
-  display: flex;
   font-size: 15px;
   height: 35px;
   width: 47px;
@@ -188,99 +181,87 @@
 
 .key, 
 .keyFunc {
+  display: flex;
   align-items: center;
   justify-content: center;
+  color: #60279e;
   border-radius: 8px;
   border: 1px solid #60279e;
   border-bottom: 2px solid #60279e;
   text-align: center
 }
 
-.key.press,
-.keyFunc.press {
+.key.active,
+.keyFunc.active {
   background-color: #00ced1;
   border-color: #00e1ef;
   color: #000;
-  top: 0.2em;
-  box-shadow: 0 0 0 0.05em #000
 }
 
-.key.active,
-.keyFunc.active {
-  background-color: #000;
-  border-color: #00e1ef;
-  color: #01c7d4;
-  top: 0.2em;
-  box-shadow: 0 0 0 0.05em #000
-}
-
-.keyFunc > p,
-.key > p {
+.key > span {
   margin: 0 auto 0
 }
 
-.key.backSpace {
+.Backspace {
   width: 150px
 }
 
-.key.arithmeticKey.backslash {
+.Backslash {
   width: 130px
 }
 
-.rowTwo .key192 p {
+.rowTwo .key192 span {
   font-size: 40px
 }
 
-.key.caps {
+.CapsLock {
   width: 105px
 }
 
-.key.enter {
+.Enter {
   width: 150px
 }
 
-.key.shiftLeft {
+.ShiftLeft {
   width: 132px
 }
 
-.key.shiftRight {
-  width: 180px
-}
-
-.key.ctrl1,
-.key.ctrl2 {
-  width: 95px
-}
-
-.key.cont,
-.key.tab,
-.key.wndw,
-.key.alt {
-  width: 70px
-}
-
-.key.space {
-  width: 325px
-}
-
-.key.backSpace {
-  margin-right: 130px
-}
-
-.enter,
-.backslash {
-  margin-right: auto
-}
-
-.shiftRight {
+.ShiftRight {
+  width: 180px;
   margin-right: 20px
 }
 
-.arrowUp {
+.ControlRight,
+.ControlLeft {
+  width: 95px
+}
+
+.Tab,
+.MetaLeft,
+.MetaRight,
+.AltLeft,
+.AltRight {
+  width: 70px
+}
+
+.Space {
+  width: 325px
+}
+
+.Backspace {
+  margin-right: 130px
+}
+
+.Enter,
+.Backslash {
+  margin-right: auto
+}
+
+.ArrowUp {
   margin-right: 55px
 }
 
-.key.key96 {
+.Numpad0 {
   width: 104px
 }
 
@@ -288,11 +269,47 @@
   min-width: 51.6px
 }
 
-.rowOne .keyFunc.key36 {
+.rowOne .Home {
   margin-right: 20px
 }
 
-.key144 {
+.NumLock {
   font-size: 15px
 }
 
+
+/* 
+**  Basic theme
+*/
+.basicTheme #kbLayout {
+  background-color: rgb(190 190 190);
+  border-color: #000
+}
+
+.basicTheme .key,
+.basicTheme .keyFunc {
+  border-color: #000;
+  color: #000
+}
+
+.basicTheme .key span,
+.basicTheme .keyFunc span,
+.basicTheme .key span {
+  font-weight: bold
+}
+
+.basicTheme .key.active, 
+.basicTheme .keyFunc.active {
+  background-color: limegreen;
+  border-color: #000;
+   box-shadow: none;
+}
+
+.basicTheme #testBtns > button {
+  width: 160px;
+  background-color: #4c4c4c;
+  border: 1px solid #000;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 5px
+}

@@ -1,28 +1,24 @@
 /**
- * Returns a selector based on the key position and code.
+ * Returns a selector based on the key code.
  *
- * @param {number} keyPos - the position of the key
  * @param {string} keyCode - the code of the key
- * @return {string} selector based on the key position and code
+ * @return {string} selector based on the key code
  */
-function getKeySelector(keyPos, keyCode) {
+function getKeySelector(keyCode) {
   const specialKeys = ["NumpadEnter", "ShiftRight", "ControlRight", "AltRight"];
-  return specialKeys.includes(keyPos) ? ".keyPos" + keyPos : ".key" + keyCode;
+  return specialKeys.includes(keyCode) ? `.key.${keyCode}` : `.key.${keyCode}`;
 }
 
 /**
- * Updates the class of the specified element by adding and removing classes.
+ * Updates the class of the specified element by adding the 'active' class.
  *
  * @param {string} selector - The CSS selector for the element to be updated
- * @param {string} addClass - The class to be added to the element
- * @param {string} removeClass - The class to be removed from the element
  */
-function updateElementClass(selector, addClass, removeClass) {
+function updateElementClass(selector) {
   try {
     const element = document.querySelector(selector);
     if (element) {
-      element.classList.remove(removeClass);
-      element.classList.add(addClass);
+      element.classList.add("active");
     } else {
       console.warn(`Element with selector "${selector}" not found.`);
     }
@@ -33,34 +29,35 @@ function updateElementClass(selector, addClass, removeClass) {
 
 document.addEventListener("keydown", function (e) {
   e.preventDefault();
-  const keySelector = getKeySelector(e.code, e.keyCode);
-  updateElementClass(keySelector, "press", "active");
+  const keySelector = getKeySelector(e.code); // Use e.code for consistency and accuracy
+  updateElementClass(keySelector);
   console.log(`Key pressed: ${e.key}`);
 });
 
 document.addEventListener("mousedown", function (e) {
-  const mouseSelector = ".key" + e.button;
-  updateElementClass(mouseSelector, "press", "active");
+  const mouseSelector = `.key.Mouse${e.button}`;
+  updateElementClass(mouseSelector);
 });
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
-window.addEventListener(
-  "wheel",
-  function (e) {
-    const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
-    updateElementClass(scrollSelector, "active", "press");
-  },
-  { passive: false }
-);
+window.addEventListener("wheel", function (e) {
+  const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
+  updateElementClass(scrollSelector);
+}, { passive: false });
+
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event
   handleResize(); // Initial resizing
 });
 
+
+/*
+**  Resizes the keyboard to fit the window.
+*/
 function handleResize() {
   try {
     // Get the width of the keyboard container
@@ -93,24 +90,11 @@ function handleResize() {
     console.error("Error handling resize:", error);
   }
 }
-/**
- * Scales the keyboard element by the given percentage.
- *
- * @param {Element} element - the element to be scaled
- * @param {number} percentage - the percentage by which the element should be scaled
- * @return {void} 
- */
+
 function scaleKeyboard(element, percentage) {
   element.style.transform = `scale(${percentage})`; // Scale and translate the element
 }
 
-/**
- * Creates a debounced function that delays invoking `func` until after `delay` milliseconds have elapsed since the last time the debounced function was invoked.
- *
- * @param {Function} func - The function to debounce.
- * @param {number} delay - The number of milliseconds to delay.
- * @return {Function} The debounced function.
- */
 function debounce(func, delay) {
   let timeoutId;
   return function () {
@@ -119,7 +103,10 @@ function debounce(func, delay) {
   };
 }
 
-// Webcam
+
+/*
+**  Webcam
+*/
 const video = document.getElementById("video");
 
 function webcamAccess() {
@@ -166,7 +153,52 @@ window.addEventListener("beforeunload", function () {
 });
 
 
-// Mic Test Recording
+// // Mic Test
+// let streamTest;
+// const audioTest = document.getElementById('audioTest');
+// async function handleMicAccess() {
+//   try {
+//     // Check if getUserMedia method is available
+//     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+//       console.log("getUserMedia not supported by this browser.");
+//       return;
+//     }
+
+//     // Request microphone access
+//     streamTest = await navigator.mediaDevices.getUserMedia({ audio: true });
+//     console.log("Microphone access granted");
+
+//     audioTest.style.display = "block";
+  
+//     // Use the stream 
+//     const audioContext = new AudioContext();
+//     const source = audioContext.createMediaStreamSource(streamTest);
+
+//     source.connect(audioContext.destination);
+//     audioTest.srcObject = streamTest;
+
+//     console.log(streamTest);
+
+//   } catch (error) {
+//     console.error("Error accessing the microphone or processing audio", error);
+//   }
+// }
+// const micTest = document.getElementById("micTest");
+// micTest.addEventListener("click", handleMicAccess);
+
+// // Stops the stream, removes the audio element
+// const audioTestStop = document.getElementById('micTestStop');
+// audioTestStop.addEventListener("click", function () {
+//   streamTest.getTracks().forEach(function (track) {
+//     track.stop();
+//     audioTest.style.display = "none";
+//   });
+// });
+
+
+/*
+**  Recording
+*/
 const audioRecord = document.getElementById('audioRecord');
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');
@@ -194,6 +226,7 @@ function setupMediaRecorder(stream) {
   mediaRecorder.start();
   console.log('Audio recording in progress...');
 }
+
 
 /**
  * Replaces the source URL of the audio element and sets its display style to block.
@@ -233,4 +266,5 @@ function stopRecording() {
 
 startRecordingButton.addEventListener('click', handleMicRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
+
 console.log('%cHello there! 🌈 If you see this message, know that you are awesome!', 'background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;');

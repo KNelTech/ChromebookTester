@@ -6,10 +6,9 @@ const alertBtn = document.getElementById('alertBtn');
 
 function showAlert(options = {}) {
   const defaultOptions = {
-    title: 'Alert', // Default title
-    message: 'This is an alert! I am alerting you that my weenie is extremely average! tmi? I don\'t care.', // Default message
-    buttonText: 'Confirm', // Default button text
-    // ... other default options here ...
+    title: 'Alert',
+    message: 'This is an alert',
+    buttonText: 'Confirm',
   };
 
   // Merge default options with the provided options
@@ -19,17 +18,12 @@ function showAlert(options = {}) {
   alertTitle.innerText = mergedOptions.title;
   alertText.innerText = mergedOptions.message;
   alertBtn.innerText = mergedOptions.buttonText;
-
-  // Show the modal
   alertContainer.style.display = 'block';
 
-  // Function to close the modal
-  const closeAlert = function() {
+  const closeAlert = function closeAlert() {
     alertContainer.style.display = 'none';
-    // Remove the event listener to prevent memory leaks
     alertBtn.removeEventListener('click', closeAlert);
   };
 
-  // Set up the close functionality using 'click' event
   alertBtn.addEventListener('click', closeAlert);
 }

@@ -15,16 +15,12 @@ function getKeySelector(keyCode) {
  * @param {string} selector - The CSS selector for the element to be updated
  */
 function updateElementClass(selector) {
-  try {
     const element = document.querySelector(selector);
     if (element) {
       element.classList.add("active");
     } else {
       console.error(`Element with selector "${selector}" not found.`);
     }
-  } catch (error) {
-    console.error("Error updating element class:", error);
-  }
 }
 
 document.addEventListener("keydown", function (e) {

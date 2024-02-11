@@ -20,7 +20,7 @@ function updateElementClass(selector) {
     if (element) {
       element.classList.add("active");
     } else {
-      console.warn(`Element with selector "${selector}" not found.`);
+      console.error(`Element with selector "${selector}" not found.`);
     }
   } catch (error) {
     console.error("Error updating element class:", error);
@@ -131,6 +131,7 @@ function webcamAccess() {
         console.log('Webcam access granted.');
       })
       .catch(function (error) {
+        showAlert({message: 'Error finding webcam. did you allow access?'});
         console.error("Error accessing webcam:", error);
       });
   } else {
@@ -209,6 +210,7 @@ async function handleMicRecording() {
       console.error('Failed to get microphone stream.');
     }
   } catch (error) {
+    showAlert({message: 'Error finding microphone. did you allow access?'});
     console.error('Error accessing microphone:', error);
   }
 }

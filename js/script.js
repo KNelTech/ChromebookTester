@@ -221,4 +221,38 @@ function stopRecording() {
 startRecordingButton.addEventListener('click', handleMicRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
 
+// Theme Selector
+const themeSelector = document.getElementById('themeSelector');
+
+const themes = [
+  { value: '', text: 'Default Theme' },
+  { value: 'basicTheme', text: 'Basic Theme' }
+];
+
+themes.forEach(theme => {
+  const option = document.createElement('option');
+  option.value = theme.value;
+  option.textContent = theme.text;
+  themeSelector.appendChild(option);
+});
+
+function handleThemeChange() {
+  const selectedTheme = this.value;
+  const htmlElement = document.documentElement;
+  
+  themes.forEach(theme => {
+    if (theme.value) {
+      htmlElement.classList.remove(theme.value);
+    }
+  });
+
+  if (selectedTheme) {
+    htmlElement.classList.add(selectedTheme);
+  }
+}
+themeSelector.addEventListener('change', handleThemeChange);
+
+
+
+
 console.log('%cHello there! 🌈 If you see this message, know that you are awesome!', 'background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;');

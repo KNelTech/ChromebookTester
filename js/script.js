@@ -254,7 +254,84 @@ console.log(
 );
 
 // begin battery
+document.addEventListener("DOMContentLoaded", () => {
+  // Ensure the kbLayout element exists
+  const kbLayout = document.getElementById("kbLayout");
+  if (!kbLayout) {
+    console.error("kbLayout element not found");
+    return;
+  }
 
+  // Battery Information
+  const batteryInfo = document.createElement("div");
+  batteryInfo.id = "battery-info";
+  batteryInfo.innerHTML = `
+      <div class="batterybx">
+          <p class="titlebtry"></p>
+          <p class="battery-details"></p>
+      </div>
+  `;
+  kbLayout.appendChild(batteryInfo);
+
+  function toTime(sec) {
+    const hours = Math.floor(sec / 3600)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor((sec % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    return `${hours} hours ${minutes} minutes`;
+  }
+
+  function setMessage(battery) {
+    const title = `${battery.charging ? "Charging" : "Not Charging"} - ${(
+      battery.level * 100
+    ).toFixed(2)}% Available`;
+    document.querySelector(".batterybx .titlebtry").innerHTML = title;
+
+    let htmltext = "";
+    if (battery.charging && battery.chargingTime !== Infinity) {
+      htmltext += `<br>Fully charged in: ${toTime(battery.chargingTime)}`;
+    }
+    if (!battery.charging && battery.dischargingTime !== Infinity) {
+      htmltext += `<br>Discharging in: ${toTime(battery.dischargingTime)}`;
+    }
+    document.querySelector(".batterybx .battery-details").innerHTML = htmltext;
+  }
+
+  function updateAllBatteryInfo(battery) {
+    setMessage(battery);
+  }
+
+  if (navigator.getBattery) {
+    navigator
+      .getBattery()
+      .then((battery) => {
+        updateAllBatteryInfo(battery);
+
+        battery.addEventListener("chargingchange", () =>
+          updateAllBatteryInfo(battery)
+        );
+        battery.addEventListener("levelchange", () =>
+          updateAllBatteryInfo(battery)
+        );
+        battery.addEventListener("chargingtimechange", () =>
+          updateAllBatteryInfo(battery)
+        );
+        battery.addEventListener("dischargingtimechange", () =>
+          updateAllBatteryInfo(battery)
+        );
+      })
+      .catch((error) => {
+        console.error("Error accessing battery information:", error);
+        batteryInfo.innerHTML = "<p>Error accessing battery information</p>";
+      });
+  } else {
+    batteryInfo.innerHTML = "<p>Battery API not supported by this browser</p>";
+  }
+});
+
+/*
 document.addEventListener("DOMContentLoaded", () => {
   // Ensure the kbLayout element exists
   const kbLayout = document.getElementById("kbLayout");

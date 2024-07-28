@@ -355,6 +355,8 @@
 }
 
 /* battery */
+/* style.css */
+
 #battery-info {
   position: absolute;
   bottom: 10px;
@@ -365,5 +367,12 @@
   border-radius: 5px;
   font-family: Arial, sans-serif;
   font-size: 14px;
-  z-index: 99;
+}
+
+.batterybx {
+  font-family: Arial, sans-serif;
+}
+
+.batterybx .titlebtry {
+  font-weight: bold;
 }

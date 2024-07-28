@@ -1,12 +1,5 @@
-/**
- * Returns a selector based on the key code.
- *
- * @param {string} keyCode - the code of the key
- * @return {string} selector based on the key code
- */
 function getKeySelector(keyCode) {
-  const specialKeys = ["NumpadEnter", "ShiftRight", "ControlRight", "AltRight"];
-  return specialKeys.includes(keyCode) ? `.key.${keyCode}` : `.key.${keyCode}`;
+  return `.key.${keyCode}`;
 }
 
 /**
@@ -15,12 +8,12 @@ function getKeySelector(keyCode) {
  * @param {string} selector - The CSS selector for the element to be updated
  */
 function updateElementClass(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.classList.add("active");
-    } else {
-      console.error(`Element with selector "${selector}" not found.`);
-    }
+  const element = document.querySelector(selector);
+  if (element) {
+    element.classList.add("active");
+  } else {
+    console.error(`Element with selector "${selector}" not found.`);
+  }
 }
 
 document.addEventListener("keydown", function (e) {
@@ -39,21 +32,23 @@ document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
-window.addEventListener("wheel", function (e) {
-  const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
-  updateElementClass(scrollSelector);
-}, { passive: false });
-
+window.addEventListener(
+  "wheel",
+  function (e) {
+    const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
+    updateElementClass(scrollSelector);
+  },
+  { passive: false }
+);
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event
   handleResize(); // Initial resizing
 });
 
-
 /*
-**  Resizes the keyboard to fit the window.
-*/
+ **  Resizes the keyboard to fit the window.
+ */
 function handleResize() {
   try {
     // Get the width of the keyboard container
@@ -99,10 +94,9 @@ function debounce(func, delay) {
   };
 }
 
-
 /*
-**  Webcam
-*/
+ **  Webcam
+ */
 const video = document.getElementById("video");
 
 function webcamAccess() {
@@ -114,7 +108,10 @@ function webcamAccess() {
   }
 
   // Check if getUserMedia method is available
-  if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function") {
+  if (
+    navigator.mediaDevices &&
+    typeof navigator.mediaDevices.getUserMedia === "function"
+  ) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function (stream) {
@@ -124,10 +121,10 @@ function webcamAccess() {
           console.error("Error attempting to play video:", playError);
         });
         video.style.display = "block"; // Only display the video element if access is granted
-        console.log('Webcam access granted.');
+        console.log("Webcam access granted.");
       })
       .catch(function (error) {
-        showAlert({message: 'Error finding webcam. did you allow access?'});
+        showAlert({ message: "Error finding webcam. did you allow access?" });
         console.error("Error accessing webcam:", error);
       });
   } else {
@@ -150,11 +147,11 @@ window.addEventListener("beforeunload", function () {
 });
 
 /*
-**  Recording
-*/
-const audioRecord = document.getElementById('audioRecord');
-const startRecordingButton = document.getElementById('startRecording');
-const stopRecordingButton = document.getElementById('stopRecording');
+ **  Recording
+ */
+const audioRecord = document.getElementById("audioRecord");
+const startRecordingButton = document.getElementById("startRecording");
+const stopRecordingButton = document.getElementById("stopRecording");
 let mediaRecorder;
 let recordedChunks = [];
 
@@ -163,23 +160,22 @@ function setupMediaRecorder(stream) {
 
   mediaRecorder = new MediaRecorder(stream);
 
-  mediaRecorder.addEventListener('dataavailable', (e) => {
+  mediaRecorder.addEventListener("dataavailable", (e) => {
     if (e.data.size > 0) {
       recordedChunks.push(e.data);
     }
   });
 
-  mediaRecorder.addEventListener('stop', () => {
-    const recordedBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+  mediaRecorder.addEventListener("stop", () => {
+    const recordedBlob = new Blob(recordedChunks, { type: "audio/wav" });
     const recordedUrl = URL.createObjectURL(recordedBlob);
 
     replaceAudioElement(recordedUrl);
   });
 
   mediaRecorder.start();
-  console.log('Audio recording in progress...');
+  console.log("Audio recording in progress...");
 }
-
 
 /**
  * Replaces the source URL of the audio element and sets its display style to block.
@@ -188,49 +184,49 @@ function setupMediaRecorder(stream) {
  */
 function replaceAudioElement(srcUrl) {
   audioRecord.src = srcUrl;
-  audioRecord.style.display = 'block';
-  console.log('Audio recording finished.');
+  audioRecord.style.display = "block";
+  console.log("Audio recording finished.");
 }
 
-// Asynchronously handles microphone recording by accessing the device's media stream, 
+// Asynchronously handles microphone recording by accessing the device's media stream,
 // setting up the media recorder, and updating the recording status display.
 async function handleMicRecording() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     if (stream) {
-      console.log('Microphone access granted.');
+      console.log("Microphone access granted.");
       setupMediaRecorder(stream);
-      recordingStatus.style.display = 'block';
-      audioRecord.style.display = 'none';
+      recordingStatus.style.display = "block";
+      audioRecord.style.display = "none";
     } else {
-      console.error('Failed to get microphone stream.');
+      console.error("Failed to get microphone stream.");
     }
   } catch (error) {
-    showAlert({message: 'Error finding microphone. did you allow access?'});
-    console.error('Error accessing microphone:', error);
+    showAlert({ message: "Error finding microphone. did you allow access?" });
+    console.error("Error accessing microphone:", error);
   }
 }
 
 function stopRecording() {
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
     mediaRecorder.stop();
-    recordingStatus.style.display = 'none';
+    recordingStatus.style.display = "none";
   }
 }
 
-startRecordingButton.addEventListener('click', handleMicRecording);
-stopRecordingButton.addEventListener('click', stopRecording);
+startRecordingButton.addEventListener("click", handleMicRecording);
+stopRecordingButton.addEventListener("click", stopRecording);
 
 // Theme Selector
-const themeSelector = document.getElementById('themeSelector');
+const themeSelector = document.getElementById("themeSelector");
 
 const themes = [
-  { value: '', text: 'Default Theme' },
-  { value: 'basicTheme', text: 'Basic Theme' }
+  { value: "", text: "Default Theme" },
+  { value: "basicTheme", text: "Basic Theme" },
 ];
 
-themes.forEach(theme => {
-  const option = document.createElement('option');
+themes.forEach((theme) => {
+  const option = document.createElement("option");
   option.value = theme.value;
   option.textContent = theme.text;
   themeSelector.appendChild(option);
@@ -239,8 +235,8 @@ themes.forEach(theme => {
 function handleThemeChange() {
   const selectedTheme = this.value;
   const htmlElement = document.documentElement;
-  
-  themes.forEach(theme => {
+
+  themes.forEach((theme) => {
     if (theme.value) {
       htmlElement.classList.remove(theme.value);
     }
@@ -250,9 +246,254 @@ function handleThemeChange() {
     htmlElement.classList.add(selectedTheme);
   }
 }
-themeSelector.addEventListener('change', handleThemeChange);
+themeSelector.addEventListener("change", handleThemeChange);
 
+console.log(
+  "%cHello there!  If you see this message, know that you are awesome!",
+  "background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;"
+);
 
+// begin battery
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Ensure the kbLayout element exists
+  const kbLayout = document.getElementById("kbLayout");
+  if (!kbLayout) {
+    console.error("kbLayout element not found");
+    return;
+  }
 
-console.log('%cHello there! 🌈 If you see this message, know that you are awesome!', 'background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;');
+  // Battery Information
+  const batteryInfo = document.createElement("div");
+  batteryInfo.id = "battery-info";
+  batteryInfo.innerHTML = `
+      <p>Battery: <span class="battery-info"></span></p>
+  `;
+  kbLayout.appendChild(batteryInfo);
+
+  function toTime(sec) {
+    const hours = Math.floor(sec / 3600)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor((sec % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    return `${hours}h ${minutes}m`;
+  }
+
+  function updateBattery(battery) {
+    const percentage = parseFloat((battery.level * 100).toFixed(2)) + "%";
+    const status = battery.charging ? "Charging" : "Battery";
+    const fullyCharged =
+      battery.charging && battery.chargingTime === Infinity
+        ? "Calculating..."
+        : battery.chargingTime !== Infinity
+        ? toTime(battery.chargingTime)
+        : "---";
+    const remainingTime =
+      !battery.charging && battery.dischargingTime === Infinity
+        ? "Calculating..."
+        : battery.dischargingTime !== Infinity
+        ? toTime(battery.dischargingTime)
+        : "---";
+
+    const content = `${status} (${percentage})${
+      battery.charging
+        ? `, Full in: ${fullyCharged}`
+        : `, Remaining: ${remainingTime}`
+    }`;
+    document.querySelector(".battery-info").textContent = content;
+  }
+
+  if (navigator.getBattery) {
+    navigator
+      .getBattery()
+      .then((battery) => {
+        updateBattery(battery);
+
+        battery.addEventListener("chargingchange", () =>
+          updateBattery(battery)
+        );
+        battery.addEventListener("levelchange", () => updateBattery(battery));
+        battery.addEventListener("chargingtimechange", () =>
+          updateBattery(battery)
+        );
+        battery.addEventListener("dischargingtimechange", () =>
+          updateBattery(battery)
+        );
+      })
+      .catch((error) => {
+        console.error("Error accessing battery information:", error);
+        batteryInfo.innerHTML = "<p>Error accessing battery information</p>";
+      });
+  } else {
+    batteryInfo.innerHTML = "<p>Battery API not supported by this browser</p>";
+  }
+});
+
+/*
+document.addEventListener("DOMContentLoaded", () => {
+  // Ensure the kbLayout element exists
+  const kbLayout = document.getElementById("kbLayout");
+  if (!kbLayout) {
+    console.error("kbLayout element not found");
+    return;
+  }
+
+  // Battery Information
+  const batteryInfo = document.createElement("div");
+  batteryInfo.id = "battery-info";
+  batteryInfo.innerHTML = `
+      <p>Battery: <span class="battery-info"></span></p>
+  `;
+  kbLayout.appendChild(batteryInfo);
+
+  function toTime(sec) {
+    const hours = Math.floor(sec / 3600)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor((sec % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    return `${hours}h ${minutes}m`;
+  }
+
+  function updateBattery(battery) {
+    const percentage = parseFloat((battery.level * 100).toFixed(2)) + "%";
+    const status = battery.charging ? "Charging" : "Battery";
+    const fullyCharged =
+      battery.charging && battery.chargingTime === Infinity
+        ? "Calculating..."
+        : battery.chargingTime !== Infinity
+        ? toTime(battery.chargingTime)
+        : "---";
+    const remainingTime =
+      !battery.charging && battery.dischargingTime === Infinity
+        ? "Calculating..."
+        : battery.dischargingTime !== Infinity
+        ? toTime(battery.dischargingTime)
+        : "---";
+
+    const content = `${status} (${percentage})${
+      battery.charging
+        ? `, Full in: ${fullyCharged}`
+        : `, Remaining: ${remainingTime}`
+    }`;
+    document.querySelector(".battery-info").textContent = content;
+  }
+
+  if (navigator.getBattery) {
+    navigator
+      .getBattery()
+      .then(updateBattery)
+      .catch((error) => {
+        console.error("Error accessing battery information:", error);
+        batteryInfo.innerHTML = "<p>Error accessing battery information</p>";
+      });
+
+    navigator.getBattery().then((battery) => {
+      battery.addEventListener("chargingchange", () => updateBattery(battery));
+      battery.addEventListener("levelchange", () => updateBattery(battery));
+    });
+  } else {
+    batteryInfo.innerHTML = "<p>Battery API not supported by this browser</p>";
+  }
+}); */
+/*
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed");
+
+  // Ensure the kbLayout element exists
+  const kbLayout = document.getElementById("kbLayout");
+  if (!kbLayout) {
+    console.error("kbLayout element not found");
+    return;
+  }
+
+  // Battery Information
+  const batteryInfo = document.createElement("div");
+  batteryInfo.id = "battery-info";
+  batteryInfo.innerHTML = `
+      <p>Battery Status: <span class="battery-status"></span></p>
+      <p>Battery Level: <span class="battery-level"></span></p>
+      <p>Battery Fully Charged In: <span class="battery-fully"></span></p>
+      <p>Battery Remaining Time: <span class="battery-remaining"></span></p>
+  `;
+  kbLayout.appendChild(batteryInfo);
+
+  function toTime(sec) {
+    sec = parseInt(sec, 10);
+
+    var hours = Math.floor(sec / 3600),
+      minutes = Math.floor((sec - hours * 3600) / 60);
+
+    if (hours < 10) {
+      hours = "0" + hours;
+    }
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    return hours + ":" + minutes;
+  }
+
+  function readBattery(battery) {
+    var percentage = parseFloat((battery.level * 100).toFixed(2)) + "%",
+      fully,
+      remaining;
+
+    if (battery.charging && battery.chargingTime === Infinity) {
+      fully = "Calculating...";
+    } else if (battery.chargingTime !== Infinity) {
+      fully = toTime(battery.chargingTime);
+    } else {
+      fully = "---";
+    }
+
+    if (!battery.charging && battery.dischargingTime === Infinity) {
+      remaining = "Calculating...";
+    } else if (battery.dischargingTime !== Infinity) {
+      remaining = toTime(battery.dischargingTime);
+    } else {
+      remaining = "---";
+    }
+
+    document.querySelector(".battery-status").textContent = battery.charging
+      ? "Adapter"
+      : "Battery";
+    document.querySelector(".battery-level").textContent = percentage;
+    document.querySelector(".battery-fully").textContent = fully;
+    document.querySelector(".battery-remaining").textContent = remaining;
+  }
+
+  if (navigator.getBattery) {
+    navigator
+      .getBattery()
+      .then((battery) => {
+        readBattery(battery);
+
+        battery.addEventListener("chargingchange", () => {
+          readBattery(battery);
+        });
+
+        battery.addEventListener("levelchange", () => {
+          readBattery(battery);
+        });
+
+        battery.addEventListener("chargingtimechange", () => {
+          readBattery(battery);
+        });
+
+        battery.addEventListener("dischargingtimechange", () => {
+          readBattery(battery);
+        });
+      })
+      .catch((error) => {
+        console.error("Error accessing battery information:", error);
+        batteryInfo.innerHTML = "<p>Error accessing battery information</p>";
+      });
+  } else {
+    batteryInfo.innerHTML = "<p>Battery API not supported by this browser</p>";
+  }
+});
+*/

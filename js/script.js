@@ -254,7 +254,20 @@ console.log(
 );
 
 // begin battery
+
+//testing
+/*document.addEventListener("DOMContentLoaded", () => {
+  // Ensure the kbLayout element exists
+  const kbLayout = document.getElementById("kbLayout");
+  if (!kbLayout) {
+    console.error("kbLayout element not found");
+    return;
+  }
+*/
+// Battery Information
 document.addEventListener("DOMContentLoaded", () => {
+  // Open DOMContentLoaded
+
   // Ensure the kbLayout element exists
   const kbLayout = document.getElementById("kbLayout");
   if (!kbLayout) {
@@ -266,11 +279,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const batteryInfo = document.createElement("div");
   batteryInfo.id = "battery-info";
   batteryInfo.innerHTML = `
-      <div class="batterybx">
-          <p class="titlebtry"></p>
-          <p class="battery-details"></p>
-      </div>
-  `;
+        <div class="batterybx">
+            <p class="titlebtry"></p>
+            <p class="battery-details"></p>
+        </div>
+    `;
   kbLayout.appendChild(batteryInfo);
 
   function toTime(sec) {
@@ -307,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navigator
       .getBattery()
       .then((battery) => {
+        // Open getBattery promise
         updateAllBatteryInfo(battery);
 
         battery.addEventListener("chargingchange", () =>
@@ -323,13 +337,15 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       })
       .catch((error) => {
+        // Catch block for getBattery promise
         console.error("Error accessing battery information:", error);
         batteryInfo.innerHTML = "<p>Error accessing battery information</p>";
       });
   } else {
+    // Else block for battery API support
     batteryInfo.innerHTML = "<p>Battery API not supported by this browser</p>";
   }
-});
+}); // Close DOMContentLoaded
 
 /*
 document.addEventListener("DOMContentLoaded", () => {

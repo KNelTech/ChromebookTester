@@ -39,6 +39,7 @@
 }
 
 #kbLayout {
+  position: relative;
   background-color: rgba(0, 0, 0, 0.97);
   border: 1px solid grey;
   border-radius: 20px;
@@ -48,6 +49,7 @@
 
 #kbLayoutInner {
   display: grid;
+  position: relative; /* for batery indicator */
 }
 
 .rowOne,
@@ -355,18 +357,22 @@
 }
 
 /* battery */
-/* style.css */
 
 #battery-info {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+#battery-info {
   background-color: #fff;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   font-size: 14px;
+  width: 300px;
+  white-space: normal;
 }
 
 .batterybx {

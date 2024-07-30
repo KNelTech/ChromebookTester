@@ -1,2 +1,6 @@
 
 *.code-workspace
+
+*.pem
+
+*.py

@@ -359,19 +359,21 @@
 /* battery */
 
 #battery-info {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
 }
 
 #battery-info {
-  background-color: #fff;
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  background-color: #000000; /* Match background color */
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  box-shadow: 0 0 4px 1px #60279e;
+  border: 1px solid #60279e; /* Match border color */
+  color: #ffffff; /* Match text color */
+  border-radius: 8px; /* Match border radius */
   font-family: Arial, sans-serif;
   font-size: 14px;
-  width: 300px;
+  width: 275px;
   white-space: normal;
 }
 

@@ -48,7 +48,7 @@
 }
 
 #kbLayoutInner {
-  grid-template-rows: repeat(10, auto); /* Creates 10 rows */
+  grid-template-rows: repeat(10, auto); /* Creates 10 rows, TED */
   display: grid;
   position: relative; /* for batery indicator */
 }
@@ -63,15 +63,10 @@
   max-width: 100%;
 }
 
+/* I think this is not needed, TED!
 .mouseContainer {
-  margin: auto;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 10px;
-  align-self: center;
-  flex-grow: 1;
 }
-
+*/
 .mouseTop {
   display: flex;
   flex-direction: row;
@@ -365,7 +360,7 @@
 
 #battery-info {
   position: absolute;
-  bottom: 10px;
+  bottom: -45px; /* this is a shitty hack, TED! */
   right: 5px;
   background-color: #000000; /* Match background color */
   padding: 10px;
@@ -375,7 +370,8 @@
   border-radius: 8px; /* Match border radius */
   font-family: Arial, sans-serif;
   font-size: 14px;
-  width: 275px;
+  width: 260px;
+  height: 150px;
   white-space: normal;
 }
 
@@ -389,21 +385,20 @@
 
 /* iframe */
 
-iframe {
-  grid-row: 8;
-  display: block; /* Ensure it doesn't stretch across multiple rows */
-  width: 150px;
-  height: auto;
-  margin-right: 205px;
-}
-
 /* test underKeys we also edited the mouseContainer */
 
 .underKeys {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  gap: 100px;
+  justify-content: center;
+}
+
+.iframeWrapper {
+  grid-row: 8;
+  display: block;
+  position: absolute;
+  left: 5px;
+}
+
+.batteryIcon {
+  padding-left: 70px;
 }

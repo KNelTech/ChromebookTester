@@ -360,7 +360,7 @@
 
 #battery-info {
   position: absolute;
-  bottom: -45px; /* this is a shitty hack, TED! */
+  bottom: -40px; /* this is a shitty hack, TED! */
   right: 5px;
   background-color: #000000; /* Match background color */
   padding: 10px;

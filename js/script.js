@@ -253,4 +253,4 @@ console.log(
   "background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;"
 );
 
-// begin battery
+// begin for the video

@@ -1,16 +1,15 @@
 function getKeySelector(keyCode) {
   return `.key.${keyCode}`;
 }
-
-/**
- * Updates the class of the specified element by adding the 'active' class.
- *
- * @param {string} selector - The CSS selector for the element to be updated
- */
-function updateElementClass(selector) {
+//go over this section closely, danger block
+function updateElementClass(selector, className, action) {
   const element = document.querySelector(selector);
   if (element) {
-    element.classList.add("active");
+    if (action === "add") {
+      element.classList.add(className);
+    } else if (action === "remove") {
+      element.classList.remove(className);
+    }
   } else {
     console.error(`Element with selector "${selector}" not found.`);
   }
@@ -18,28 +17,60 @@ function updateElementClass(selector) {
 
 document.addEventListener("keydown", function (e) {
   e.preventDefault();
-  const keySelector = getKeySelector(e.code); // Use e.code for consistency and accuracy
-  updateElementClass(keySelector);
+  const keySelector = getKeySelector(e.code);
+  updateElementClass(keySelector, "active", "add");
+  updateElementClass(keySelector, "secondary-highlight", "add");
   console.log(`Key pressed: ${e.key}`);
+});
+
+document.addEventListener("keyup", function (e) {
+  const keySelector = getKeySelector(e.code);
+  updateElementClass(keySelector, "secondary-highlight", "remove");
 });
 
 document.addEventListener("mousedown", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
-  updateElementClass(mouseSelector);
+  // Add the regular "active" highlight
+  updateElementClass(mouseSelector, "active", "add");
+  // Add the secondary highlight
+  updateElementClass(mouseSelector, "secondary-highlight", "add");
+});
+
+document.addEventListener("mouseup", function (e) {
+  const mouseSelector = `.key.Mouse${e.button}`;
+  // Remove the secondary highlight
+  updateElementClass(mouseSelector, "secondary-highlight", "remove");
+  // Keep the "active" highlight
 });
 
 document.addEventListener("contextmenu", function (e) {
-  e.preventDefault();
+  e.preventDefault(); // Prevent the context menu from appearing
+  const mouseSelector = `.key.Mouse${e.button}`;
+  // Add the regular "active" highlight
+  updateElementClass(mouseSelector, "active", "add");
+  // Add the secondary highlight
+  updateElementClass(mouseSelector, "secondary-highlight", "add");
+  // Remove the secondary highlight after a brief timeout
 });
 
 window.addEventListener(
   "wheel",
   function (e) {
     const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
-    updateElementClass(scrollSelector);
+    // Add the regular "active" highlight
+    updateElementClass(scrollSelector, "active", "add");
+    // Add the secondary highlight
+    updateElementClass(scrollSelector, "secondary-highlight", "add");
+
+    // Remove the secondary highlight after a brief timeout
+    setTimeout(() => {
+      updateElementClass(scrollSelector, "secondary-highlight", "remove");
+    }, 200); // Adjust the timeout duration as needed
   },
   { passive: false }
 );
+
+//end danger block
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event

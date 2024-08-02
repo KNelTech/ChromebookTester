@@ -392,13 +392,24 @@
   justify-content: center;
 }
 
-.iframeWrapper {
+.videoWrapper {
   grid-row: 8;
   display: block;
   position: absolute;
   left: 5px;
+  border: none;
+}
+
+.underkeys video {
+  border-radius: 20px;
 }
 
 .batteryIcon {
   padding-left: 70px;
+}
+
+.key.secondary-highlight {
+  background-color: #ff9800; /* Example: orange background */
+  transform: scale(1.1); /* Example: slight scale up */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7); /* Example: glowing effect */
 }

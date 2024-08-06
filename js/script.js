@@ -1,7 +1,7 @@
 function getKeySelector(keyCode) {
   return `.key.${keyCode}`;
 }
-//go over this section closely, danger block
+//go over this section closely,
 function updateElementClass(selector, className, action) {
   const element = document.querySelector(selector);
   if (element) {
@@ -70,7 +70,7 @@ window.addEventListener(
   { passive: false }
 );
 
-//end danger block
+//end Highlightblock
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event
@@ -283,5 +283,3 @@ console.log(
   "%cHello there!  If you see this message, know that you are awesome!",
   "background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;"
 );
-
-// begin for the video

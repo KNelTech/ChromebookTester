@@ -55,7 +55,7 @@
 }
 
 #kbLayoutInner {
-  grid-template-rows: repeat(10, auto); /* Creates 10 rows, TED */
+  grid-template-rows: repeat(10, auto); /* Creates 10 rows */
   display: grid;
   position: relative; /* for batery indicator */
 }
@@ -70,10 +70,6 @@
   max-width: 100%;
 }
 
-/* I think this is not needed, TED!
-.mouseContainer {
-}
-*/
 .mouseTop {
   display: flex;
   flex-direction: row;
@@ -367,14 +363,14 @@
 
 #battery-info {
   position: absolute;
-  bottom: -40px; /* this is a shitty hack, TED! */
+  bottom: -40px;
   right: 5px;
-  background-color: #000000; /* Match background color */
+  background-color: #000000;
   padding: 10px;
   box-shadow: 0 0 4px 1px #60279e;
-  border: 1px solid #60279e; /* Match border color */
-  color: #ffffff; /* Match text color */
-  border-radius: 8px; /* Match border radius */
+  border: 1px solid #60279e;
+  color: #ffffff;
+  border-radius: 8px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   width: 260px;
@@ -390,8 +386,6 @@
   font-weight: bold;
 }
 
-/* iframe */
-
 /* test underKeys we also edited the mouseContainer */
 
 .underKeys {
@@ -404,7 +398,7 @@
   display: block;
   position: absolute;
   left: 5px;
-  border: none; /* TED, border radius is not working here. */
+  border: none; /* figure out why border radius is not working here. */
 }
 
 .underkeys video {
@@ -417,6 +411,6 @@
 
 .key.secondary-highlight {
   background-color: #ff9800;
-  transform: scale(1.1); /* Example: slight scale up */
-  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7); /* Example: glowing effect */
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
 }

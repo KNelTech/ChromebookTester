@@ -30,27 +30,22 @@ document.addEventListener("keyup", function (e) {
 
 document.addEventListener("mousedown", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Add the regular "active" highlight
   updateElementClass(mouseSelector, "active", "add");
-  // Add the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "add");
 });
 
 document.addEventListener("mouseup", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Remove the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "remove");
-  // Keep the "active" highlight
+  // Keep the "active" class for all mouse buttons
 });
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault(); // Prevent the context menu from appearing
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Add the regular "active" highlight
-  updateElementClass(mouseSelector, "active", "add");
-  // Add the secondary highlight
-  updateElementClass(mouseSelector, "secondary-highlight", "add");
-  // Remove the secondary highlight after a brief timeout
+  // Only remove the secondary highlight for the right mouse button
+  updateElementClass(mouseSelector, "secondary-highlight", "remove");
+  // Keep the "active" class
 });
 
 window.addEventListener(

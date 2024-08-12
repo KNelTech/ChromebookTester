@@ -1,29 +1,33 @@
+// Listen for the DOMContentLoaded event to ensure the DOM is fully loaded before running the script
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded event fired");
 
+  // Get the element where battery info will be appended
   const kbLayoutInner = document.getElementById("kbLayoutInner");
   if (!kbLayoutInner) {
     console.error("kbLayoutInner not found");
     return;
   }
-
+  // Check if the battery info container already exists in the DOM
   let batteryInfoContainer = document.getElementById("battery-info-container");
   if (!batteryInfoContainer) {
     console.log("Creating battery-info-container");
-    batteryInfoContainer = createBatteryInfoContainer();
-    kbLayoutInner.appendChild(batteryInfoContainer);
+    batteryInfoContainer = createBatteryInfoContainer(); // Create the container if it doesn't exist
+    kbLayoutInner.appendChild(batteryInfoContainer); // Append it to the parent element
   } else {
     console.log("battery-info-container already exists");
   }
-
+  // Check if the browser supports the Battery API
   if (navigator.getBattery) {
     console.log("Initializing battery monitoring");
     initializeBatteryMonitoring();
   } else {
-    displayUnsupportedMessage();
+    displayUnsupportedMessage(); // Display a message if the API is not supported
   }
 });
 
+// Function to create a new battery info container element
 function createBatteryInfoContainer() {
   const element = document.createElement("div");
   element.id = "battery-info-container";
@@ -40,17 +44,18 @@ function createBatteryInfoContainer() {
   console.log("Created battery-info-container element:", element);
   return element;
 }
-
+// Function to initialize battery monitoring
 function initializeBatteryMonitoring() {
   navigator
     .getBattery()
     .then((battery) => {
-      updateBatteryInfo(battery); // <-- Add this line to update immediately
-      setupBatteryEventListeners(battery);
+      updateBatteryInfo(battery); // Update battery info as soon as it's available
+      setupBatteryEventListeners(battery); // Setup event listeners for battery status changes
     })
     .catch(handleBatteryError);
 }
 
+// Function to update the displayed battery information
 function updateBatteryInfo(battery) {
   const title = `${battery.charging ? "Charging" : "Not Charging"} - ${(
     battery.level * 100
@@ -61,6 +66,7 @@ function updateBatteryInfo(battery) {
   document.querySelector(".batterybx .battery-details").innerHTML = details;
 }
 
+// Function to get detailed information about the battery status
 function getBatteryDetails(battery) {
   let details = "";
   if (battery.charging && isFinite(battery.chargingTime)) {
@@ -72,6 +78,7 @@ function getBatteryDetails(battery) {
   return details;
 }
 
+// Helper function to format time in hours and minutes
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600)
     .toString()
@@ -82,6 +89,7 @@ function formatTime(seconds) {
   return `${hours} hours ${minutes} minutes`;
 }
 
+// Function to set up event listeners for various battery events
 function setupBatteryEventListeners(battery) {
   const events = [
     "chargingchange",
@@ -93,13 +101,13 @@ function setupBatteryEventListeners(battery) {
     battery.addEventListener(event, () => updateBatteryInfo(battery));
   });
 }
-
+// Function to handle errors when accessing battery information
 function handleBatteryError(error) {
   console.error("Error accessing battery information:", error);
   document.getElementById("battery-info").innerHTML =
     "<p>Error accessing battery information</p>";
 }
-
+// Function to display a message if the Battery API is not supported
 function displayUnsupportedMessage() {
   document.getElementById("battery-info").innerHTML =
     "<p>Battery API not supported by this browser</p>";

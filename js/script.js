@@ -1,7 +1,7 @@
 function getKeySelector(keyCode) {
   return `.key.${keyCode}`;
 }
-//go over this section closely, danger block
+//handling highlight and secondary highlight
 function updateElementClass(selector, className, action) {
   const element = document.querySelector(selector);
   if (element) {
@@ -30,22 +30,27 @@ document.addEventListener("keyup", function (e) {
 
 document.addEventListener("mousedown", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
+  // Add the regular "active" highlight
   updateElementClass(mouseSelector, "active", "add");
+  // Add the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "add");
 });
 
 document.addEventListener("mouseup", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
+  // Remove the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "remove");
-  // Keep the "active" class for all mouse buttons
+  // Keep the "active" highlight
 });
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault(); // Prevent the context menu from appearing
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Only remove the secondary highlight for the right mouse button
-  updateElementClass(mouseSelector, "secondary-highlight", "remove");
-  // Keep the "active" class
+  // Add the regular "active" highlight
+  updateElementClass(mouseSelector, "active", "add");
+  // Add the secondary highlight
+  updateElementClass(mouseSelector, "secondary-highlight", "add");
+  // Remove the secondary highlight after a brief timeout
 });
 
 window.addEventListener(
@@ -64,8 +69,6 @@ window.addEventListener(
   },
   { passive: false }
 );
-
-//end danger block
 
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", debounce(handleResize, 10)); // Debounce the resize event
@@ -275,8 +278,6 @@ function handleThemeChange() {
 themeSelector.addEventListener("change", handleThemeChange);
 
 console.log(
-  "%cHello there!  If you see this message, know that you are awesome!",
+  "%cHello there! If you see this message, know that you are awesome!",
   "background: #222; color: #bb55da; font-size: 20px; padding: 8px; border-radius: 15px;"
 );
-
-// begin for the video

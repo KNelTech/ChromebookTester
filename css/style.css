@@ -49,6 +49,8 @@
   border: none;
   color: white;
   font-size: 28px;
+  /* transition: transform 0.3s ease; */
+
   transform: perspective(750px) translate3d(0px, 0px, -250px) rotateX(27deg)
     scale(0.9, 0.9);
   box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
@@ -391,12 +393,12 @@
   position: absolute;
   bottom: -40px;
   right: 5px;
-  background-color: #000000; /* Match background color */
+  background-color: #000000;
   padding: 10px;
   box-shadow: 0 0 4px 1px #60279e;
-  border: 1px solid #60279e; /* Match border color */
-  color: #ffffff; /* Match text color */
-  border-radius: 8px; /* Match border radius */
+  border: 1px solid #60279e;
+  color: #ffffff;
+  border-radius: 8px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   width: 260px;
@@ -435,6 +437,6 @@
 
 .key.secondary-highlight {
   background-color: #ff9800;
-  transform: scale(1.1); /* Example: slight scale up */
-  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7); /* Example: glowing effect */
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
 }

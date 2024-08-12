@@ -28,29 +28,31 @@ document.addEventListener("keyup", function (e) {
   updateElementClass(keySelector, "secondary-highlight", "remove");
 });
 
+// This event fires when the window loses focus, such as when the Windows key is pressed
+window.addEventListener("blur", function () {
+  const allKeys = document.querySelectorAll(".key");
+  allKeys.forEach((key) => {
+    key.classList.remove("secondary-highlight");
+  });
+});
+
 document.addEventListener("mousedown", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Add the regular "active" highlight
   updateElementClass(mouseSelector, "active", "add");
-  // Add the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "add");
 });
 
 document.addEventListener("mouseup", function (e) {
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Remove the secondary highlight
   updateElementClass(mouseSelector, "secondary-highlight", "remove");
-  // Keep the "active" highlight
+  // Do not remove the 'active' class here, it remains active
 });
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault(); // Prevent the context menu from appearing
   const mouseSelector = `.key.Mouse${e.button}`;
-  // Add the regular "active" highlight
-  updateElementClass(mouseSelector, "active", "add");
-  // Add the secondary highlight
-  updateElementClass(mouseSelector, "secondary-highlight", "add");
-  // Remove the secondary highlight after a brief timeout
+  updateElementClass(mouseSelector, "secondary-highlight", "remove");
+  // The 'active' class will remain, as we don't remove it here
 });
 
 window.addEventListener(

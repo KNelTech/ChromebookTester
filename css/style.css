@@ -406,11 +406,15 @@
 
 /* video */
 
+.videoWrapper video,
+.videoWrapper video {
+  width: 230px; /* Adjust the video width */
+  height: 153px; /* Maintain aspect ratio */
+}
+
 /* index.html specific styles */
 
 .index .videoWrapper video {
-  width: 230px; /* Adjust the video width */
-  height: 153px; /* Maintain aspect ratio */
   border-radius: 10px;
 }
 

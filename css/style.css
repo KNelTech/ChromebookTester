@@ -299,42 +299,6 @@
   font-size: 15px;
 }
 
-/* 
-**  Basic theme
-*/
-.basicTheme #kbLayout {
-  background-color: rgb(190 190 190);
-  border-color: #000;
-}
-
-.basicTheme .key,
-.basicTheme .keyFunc {
-  border-color: #000;
-  color: #000;
-}
-
-.basicTheme .key span,
-.basicTheme .keyFunc span,
-.basicTheme .key span {
-  font-weight: bold;
-}
-
-.basicTheme .key.active,
-.basicTheme .keyFunc.active {
-  background-color: limegreen;
-  border-color: #000;
-  box-shadow: none;
-}
-
-.basicTheme #testBtns > button {
-  width: 160px;
-  background-color: #4c4c4c;
-  border: 1px solid #000;
-  box-shadow: none;
-  border-radius: 5px;
-  padding: 5px;
-}
-
 /* test */
 #alertContainer {
   position: absolute;
@@ -438,4 +402,140 @@
   background-color: #ff9800;
   transform: scale(1.1);
   box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
+}
+
+/* video */
+
+/* index.html specific styles */
+
+.index .videoWrapper video {
+  width: 230px; /* Adjust the video width */
+  height: 153px; /* Maintain aspect ratio */
+  border-radius: 10px;
+}
+
+.index .videoWrapper {
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+}
+
+/*arrows*/
+
+.index .arrowContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  margin-top: 5px;
+}
+
+.index .ArrowUp,
+.index .ArrowDown,
+.index .ArrowLeft,
+.index .ArrowRight {
+  font-size: 18px;
+  margin: 5px;
+  height: 40%;
+}
+
+.index .ArrowLeft,
+.index .ArrowRight {
+  margin-top: 32.5px;
+}
+
+.index .ArrowUp,
+.index .ArrowDown {
+  margin: 0; /* Reset margin */
+}
+
+.index .ArrowLeft {
+  margin-left: 20px;
+}
+/* end arrows */
+
+/* keys */
+/* Row One */
+.index .key.Backquote {
+  font-size: 30px;
+  padding-top: 10px;
+}
+
+.index .rowOne .key {
+  width: 94.5px;
+}
+
+.index .key.keyFunc.F10 {
+  margin-right: 0px;
+}
+
+/* Row Two */
+.index .rowTwo .key {
+  width: 70px;
+}
+
+.index .rowTwo .key.Backspace {
+  width: 96px;
+  margin-right: 0px;
+}
+
+/* Row Three */
+.index .rowThree .key {
+  width: 70px;
+}
+
+.index .rowThree .key.Backslash {
+  margin-right: 0px;
+}
+
+.index .rowThree .key.Tab {
+  width: 96px;
+}
+
+/* Row Four */
+.index .rowFour .key {
+  width: 70px;
+}
+
+.index .rowFour .key.MetaLeft {
+  width: 120px;
+}
+
+.index .rowFour .key.Enter {
+  width: 120px;
+}
+
+/* Row Five */
+.index .rowFive .key {
+  width: 70px;
+}
+
+.index .rowFive .key.ShiftLeft,
+.index .rowFive .key.ShiftRight {
+  width: 157px;
+}
+
+/* Row Six */
+.index .rowSix .key.ControlLeft,
+.index .rowSix .key.AltLeft {
+  width: 157.5px;
+}
+
+.index .rowSix .key.ControlRight,
+.index .rowSix .key.AltRight {
+  width: 110px;
+}
+
+.index .rowFive .key.ShiftRight,
+.index .rowFour .key.Enter {
+  margin-right: 0px;
+}
+
+/*index.html underkeys*/
+
+.index #battery-info {
+  right: 6px;
+  padding: 10px;
+  width: 260px;
+  height: 150px;
 }

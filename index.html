@@ -8,15 +8,20 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
     <link rel="stylesheet" href="css/style.css?vers=6" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+
     <script src="js/script.js?vers=4" defer></script>
     <script src="js/alert.js" defer></script>
     <script src="js/battery.js?vers=2" defer></script>
   </head>
-  <body id="mainBody">
+  <body class="index" id="mainBody">
     <div id="NavContainer">
       <img id="logoImage" src="./img/logo.png" />
       <a href="index.html">
@@ -28,7 +33,6 @@
       <a href="windows.html">
         <button class="navBtn" id="Windows">Windows</button>
       </a>
-      <select id="themeSelector"></select>
     </div>
 
     <div id="kbContainer">
@@ -67,39 +71,6 @@
             </div>
             <div class="key keyFunc F10">
               <span>F10</span>
-            </div>
-            <div class="key keyFunc F11">
-              <span>F11</span>
-            </div>
-            <div class="key keyFunc F12">
-              <span>F12</span>
-            </div>
-            <div class="key keyFunc Pause">
-              <span>Pause</span>
-            </div>
-            <div class="key keyFunc Print">
-              <span>Print</span>
-            </div>
-            <div class="key keyFunc Delete">
-              <span>Del</span>
-            </div>
-            <div class="key keyFunc Home">
-              <span>Home</span>
-            </div>
-            <div class="key keyFunc PageUp">
-              <span>PgUp</span>
-            </div>
-            <div class="key keyFunc PageDown">
-              <span>PgDn</span>
-            </div>
-            <div class="key keyFunc ScollLock">
-              <span>Scr lk</span>
-            </div>
-            <div class="key keyFunc Insert">
-              <span>Ins</span>
-            </div>
-            <div class="key keyFunc End">
-              <span>End</span>
             </div>
           </div>
 
@@ -146,18 +117,6 @@
             <div class="key Backspace">
               <span>Backspace</span>
             </div>
-            <div class="key NumLock">
-              <span>Num Lock</span>
-            </div>
-            <div class="key NumpadDivide">
-              <span>/</span>
-            </div>
-            <div class="key NumpadMultiply">
-              <span>*</span>
-            </div>
-            <div class="key NumpadSubtract">
-              <span>_</span>
-            </div>
           </div>
 
           <div class="rowThree">
@@ -203,23 +162,13 @@
             <div class="key Backslash">
               <span>\</span>
             </div>
-            <div class="key Numpad7">
-              <span>7</span>
-            </div>
-            <div class="key Numpad8">
-              <span>8</span>
-            </div>
-            <div class="key Numpad9">
-              <span>9</span>
-            </div>
-            <div class="key plus NumpadAdd">
-              <span>+</span>
-            </div>
           </div>
 
           <div class="rowFour">
-            <div class="key CapsLock">
-              <span>Caps Lock</span>
+            <div class="key MetaLeft">
+              <span>
+                <i class="fa-brands fa-chrome"></i>
+              </span>
             </div>
             <div class="key KeyA">
               <span>A</span>
@@ -255,18 +204,6 @@
               <span>'</span>
             </div>
             <div class="key Enter">
-              <span>Enter</span>
-            </div>
-            <div class="key Numpad4">
-              <span>4</span>
-            </div>
-            <div class="key Numpad5">
-              <span>5</span>
-            </div>
-            <div class="key Numpad6">
-              <span>6</span>
-            </div>
-            <div class="key NumpadEnter">
               <span>Enter</span>
             </div>
           </div>
@@ -308,29 +245,13 @@
             <div class="key ShiftRight">
               <span>Shift</span>
             </div>
-            <div class="key ArrowUp">
-              <span>↑</span>
-            </div>
-            <div class="key Numpad1">
-              <span>1</span>
-            </div>
-            <div class="key Numpad2">
-              <span>2</span>
-            </div>
-            <div class="key Numpad3">
-              <span>3</span>
-            </div>
           </div>
 
           <div class="rowSix">
             <div class="key ControlLeft">
               <span>Ctrl</span>
             </div>
-            <div class="key MetaLeft">
-              <span>
-                <i class="fa fa-windows" aria-hidden="true"></i>
-              </span>
-            </div>
+
             <div class="key AltLeft">
               <span>Alt</span>
             </div>
@@ -338,41 +259,27 @@
             <div class="key AltRight">
               <span>Alt</span>
             </div>
-            <div class="key MetaRight">
-              <span>
-                <i class="fa fa-file-text-o" aria-hidden="true"></i>
-              </span>
-            </div>
             <div class="key ControlRight">
               <span>Ctrl</span>
             </div>
             <div class="key ArrowLeft">
-              <span>←</span>
+              <span>˂</span>
             </div>
-            <div class="key ArrowDown">
-              <span>↓</span>
+            <div class="arrowContainer">
+              <div class="key ArrowUp">
+                <span>˄</span>
+              </div>
+              <div class="key ArrowDown">
+                <span>˅</span>
+              </div>
             </div>
             <div class="key ArrowRight">
-              <span>→</span>
-            </div>
-            <div class="key Numpad0">
-              <span>0</span>
-            </div>
-            <div class="key NumpadDecimal">
-              <span>.</span>
+              <span>˃</span>
             </div>
           </div>
           <div class="underKeys">
             <div class="videoWrapper">
-              <video
-                id="myVideo"
-                width="230"
-                height="150"
-                style="border-radius: 10px"
-                controls
-                autoplay
-                loop
-              >
+              <video id="myVideo" controls autoplay loop>
                 <source src="./video/notTheRickroll.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>

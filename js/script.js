@@ -128,54 +128,117 @@ function debounce(func, delay) {
 /*
  **  Webcam
  */
+
 const video = document.getElementById("video");
+let webcamActive = false; // Track whether the webcam is active
 
 function webcamAccess() {
   // Ensure the video element exists
-  const video = document.getElementById("video");
   if (!video) {
     console.error("Video element not found.");
     return;
   }
 
-  // Check if getUserMedia method is available
-  if (
-    navigator.mediaDevices &&
-    typeof navigator.mediaDevices.getUserMedia === "function"
-  ) {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(function (stream) {
-        video.srcObject = stream;
-        video.play().catch(function (playError) {
-          // Handle potential errors that might occur when trying to play the video
-          console.error("Error attempting to play video:", playError);
-        });
-        video.style.display = "block"; // Only display the video element if access is granted
-        console.log("Webcam access granted.");
-      })
-      .catch(function (error) {
-        showAlert({ message: "Error finding webcam. did you allow access?" });
-        console.error("Error accessing webcam:", error);
-      });
+  // If webcam is currently active, stop it
+  if (webcamActive) {
+    stopWebcam();
   } else {
-    console.error("getUserMedia not supported by this browser.");
+    // Check if getUserMedia method is available
+    if (
+      navigator.mediaDevices &&
+      typeof navigator.mediaDevices.getUserMedia === "function"
+    ) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+          video.play().catch(function (playError) {
+            console.error("Error attempting to play video:", playError);
+          });
+          video.style.display = "block"; // Only display the video element if access is granted
+          webcamActive = true;
+          console.log("Webcam access granted.");
+        })
+        .catch(function (error) {
+          showAlert({ message: "Error finding webcam. Did you allow access?" });
+          console.error("Error accessing webcam:", error);
+        });
+    } else {
+      console.error("getUserMedia not supported by this browser.");
+    }
+  }
+}
+
+function stopWebcam() {
+  const stream = video.srcObject;
+  if (stream) {
+    const tracks = stream.getTracks();
+    tracks.forEach((track) => track.stop());
+    video.srcObject = null;
+    video.style.display = "none"; // Hide the video element when webcam is off
+    webcamActive = false;
+    console.log("Webcam stopped.");
   }
 }
 
 const webcamTest = document.getElementById("webcamTest");
 webcamTest.addEventListener("click", function () {
-  webcamAccess();
+  webcamAccess(); // Toggle webcam on or off
 });
 
 // Cleanup webcam when done
 window.addEventListener("beforeunload", function () {
-  const stream = video.srcObject;
-  if (stream) {
-    const tracks = stream.getTracks();
-    tracks.forEach((track) => track.stop());
-  }
+  stopWebcam();
 });
+
+// const video = document.getElementById("video");
+
+// function webcamAccess() {
+//   // Ensure the video element exists
+//   const video = document.getElementById("video");
+//   if (!video) {
+//     console.error("Video element not found.");
+//     return;
+//   }
+
+//   // Check if getUserMedia method is available
+//   if (
+//     navigator.mediaDevices &&
+//     typeof navigator.mediaDevices.getUserMedia === "function"
+//   ) {
+//     navigator.mediaDevices
+//       .getUserMedia({ video: true })
+//       .then(function (stream) {
+//         video.srcObject = stream;
+//         video.play().catch(function (playError) {
+//           // Handle potential errors that might occur when trying to play the video
+//           console.error("Error attempting to play video:", playError);
+//         });
+//         video.style.display = "block"; // Only display the video element if access is granted
+//         console.log("Webcam access granted.");
+//       })
+//       .catch(function (error) {
+//         showAlert({ message: "Error finding webcam. did you allow access?" });
+//         console.error("Error accessing webcam:", error);
+//       });
+//   } else {
+//     console.error("getUserMedia not supported by this browser.");
+//   }
+// }
+
+// const webcamTest = document.getElementById("webcamTest");
+// webcamTest.addEventListener("click", function () {
+//   webcamAccess();
+// });
+
+// // Cleanup webcam when done
+// window.addEventListener("beforeunload", function () {
+//   const stream = video.srcObject;
+//   if (stream) {
+//     const tracks = stream.getTracks();
+//     tracks.forEach((track) => track.stop());
+//   }
+// });
 
 /*
  **  Recording

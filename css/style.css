@@ -201,6 +201,12 @@
   margin: 5px 1px;
 }
 
+.MetaLeft img,
+.MetaRight img,
+.keyFunc img {
+  margin-top: 5px;
+}
+
 .key,
 .keyFunc {
   display: flex;

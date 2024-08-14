@@ -1,0 +1,21 @@
+<svg
+  fill="#000000"
+  width="24px"
+  height="24px"
+  viewBox="0 0 24 24"
+  id="left-arrow"
+  xmlns="http://www.w3.org/2000/svg"
+  class="icon line"
+>
+  <path
+    id="primary"
+    d="M21,12H3M6,9,3,12l3,3"
+    style="
+      fill: none;
+      stroke: #60279e;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+    "
+  ></path>
+</svg>

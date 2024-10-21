@@ -2,33 +2,39 @@ function getKeySelector(keyCode) {
   return `.key.${keyCode}`;
 }
 
-function updateElementClass(selector, className, action) {
+const updateElementClass = (selector, className, action) => {
   const element = document.querySelector(selector);
   if (element) {
-    if (action === "add") {
-      element.classList.add(className);
-    } else if (action === "remove") {
-      element.classList.remove(className);
-    }
+    element.classList[action](className);
   } else {
     console.error(`Element with selector "${selector}" not found.`);
   }
-}
+};
 
-function handleKeyDown(e) {
-  e.preventDefault();
+function handleKeyEvent(e) {
   const keySelector = getKeySelector(e.code);
-  updateElementClass(keySelector, "active", "add");
-  updateElementClass(keySelector, "secondary-highlight", "add");
-  console.log(`Key pressed: ${e.key}`);
+
+  if (e.type === "keydown") {
+    e.preventDefault();
+    updateElementClass(keySelector, "active", "add");
+    updateElementClass(keySelector, "secondary-highlight", "add");
+    console.log(`Key pressed: ${e.key}`);
+  } else if (e.type === "keyup") {
+    updateElementClass(keySelector, "secondary-highlight", "remove");
+  }
 }
 
-function handleKeyUp(e) {
-  const keySelector = getKeySelector(e.code);
-  updateElementClass(keySelector, "secondary-highlight", "remove");
+function handleMouseEvent(e) {
+  const mouseSelector = `.key.Mouse${e.button}`;
+
+  if (e.type === "mousedown") {
+    updateElementClass(mouseSelector, "active", "add");
+    updateElementClass(mouseSelector, "secondary-highlight", "add");
+  } else if (e.type === "mouseup") {
+    updateElementClass(mouseSelector, "secondary-highlight", "remove");
+  }
 }
 
-// look into this
 function handleWindowBlur() {
   const allKeys = document.querySelectorAll(".key");
   allKeys.forEach((key) => {
@@ -36,32 +42,10 @@ function handleWindowBlur() {
   });
 }
 
-function handleMouseDown(e) {
-  const mouseSelector = `.key.Mouse${e.button}`;
-  updateElementClass(mouseSelector, "active", "add");
-  updateElementClass(mouseSelector, "secondary-highlight", "add");
-}
-
-function handleMouseUp(e) {
-  const mouseSelector = `.key.Mouse${e.button}`;
-  updateElementClass(mouseSelector, "secondary-highlight", "remove");
-}
-
-// figure out what I needed this for
-function handleContextMenu(e) {
-  e.preventDefault();
-  const mouseSelector = `.key.Mouse${e.button}`;
-  updateElementClass(mouseSelector, "secondary-highlight", "remove");
-}
-
 function handleWheel(e) {
   const scrollSelector = e.deltaY > 0 ? ".scrollDown" : ".scrollUp";
-
   updateElementClass(scrollSelector, "active", "add");
-
   updateElementClass(scrollSelector, "secondary-highlight", "add");
-
-  // why did I need a timeout here
   setTimeout(() => {
     updateElementClass(scrollSelector, "secondary-highlight", "remove");
   }, 200);
@@ -87,7 +71,7 @@ function handleResize() {
 
     const myPercentage = myWidth / windowWidth;
     if (myPercentage > 1) {
-      const newPercentage = Math.min(0.95, (windowWidth / myWidth) * 0.95);
+      const newPercentage = Math.min(0.95, 0.95 * (windowWidth / myWidth));
       scaleKeyboard(keyboardWrapper, newPercentage);
     } else {
       scaleKeyboard(keyboardWrapper, 1);
@@ -101,24 +85,25 @@ function scaleKeyboard(element, percentage) {
   element.style.transform = `scale(${percentage})`;
 }
 
-// what and why is debounce
-function debounce(func, delay) {
-  let timeoutId;
+function throttle(func, limit) {
+  let inThrottle;
   return function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(func, delay);
+    if (!inThrottle) {
+      func();
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
   };
 }
 
 function initKeyboardModule() {
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("keyup", handleKeyUp);
+  document.addEventListener("keydown", handleKeyEvent);
+  document.addEventListener("keyup", handleKeyEvent);
   window.addEventListener("blur", handleWindowBlur);
-  document.addEventListener("mousedown", handleMouseDown);
-  document.addEventListener("mouseup", handleMouseUp);
-  document.addEventListener("contextmenu", handleContextMenu);
+  document.addEventListener("mousedown", handleMouseEvent);
+  document.addEventListener("mouseup", handleMouseEvent);
   window.addEventListener("wheel", handleWheel, { passive: false });
-  window.addEventListener("resize", debounce(handleResize, 200));
+  window.addEventListener("resize", throttle(handleResize, 30));
 
   handleResize();
 }

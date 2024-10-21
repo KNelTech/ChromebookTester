@@ -3,6 +3,8 @@ import { handleMicRecording, stopRecording } from "./audioModule.js";
 import { initializeBatteryMonitoring } from "./batteryModule.js";
 import { initKeyboardModule } from "./keyboardModule.js";
 
+document.addEventListener("contextmenu", (event) => event.preventDefault());
+
 document.addEventListener("DOMContentLoaded", function () {
   //video
   const videoElement = document.getElementById("video");

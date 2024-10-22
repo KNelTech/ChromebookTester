@@ -108,4 +108,4 @@ function initKeyboardModule() {
   handleResize();
 }
 
-export { initKeyboardModule, handleResize };
+export { initKeyboardModule };

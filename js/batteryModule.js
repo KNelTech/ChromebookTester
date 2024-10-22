@@ -1,36 +1,3 @@
-function initializeBatteryMonitoring() {
-  const kbLayoutInner = document.getElementById("kbLayoutInner");
-  if (!kbLayoutInner) {
-    console.error("kbLayoutInner not found");
-    return;
-  }
-
-  let batteryInfoContainer = document.getElementById("battery-info-container");
-  if (!batteryInfoContainer) {
-    batteryInfoContainer = createBatteryInfoContainer();
-    kbLayoutInner.appendChild(batteryInfoContainer);
-  }
-
-  if (navigator.getBattery) {
-    console.log("Battery API supported, initializing battery monitoring");
-
-    navigator
-      .getBattery()
-      .then((battery) => {
-        if (!battery) {
-          throw new Error("Battery API returned an undefined battery object.");
-        }
-        updateBatteryInfo(battery, batteryInfoContainer);
-        setupBatteryEventListeners(battery, batteryInfoContainer);
-      })
-      .catch((error) => {
-        handleBatteryError(error, batteryInfoContainer);
-      });
-  } else {
-    displayUnsupportedMessage(batteryInfoContainer);
-  }
-}
-
 function createBatteryInfoContainer() {
   const element = document.createElement("div");
   element.id = "battery-info-container";
@@ -119,4 +86,37 @@ function displayUnsupportedMessage(containerElement) {
   updateMessage(containerElement, "unsupported", "Battery API not supported");
 }
 
-export { initializeBatteryMonitoring };
+function initBatteryModule() {
+  const kbLayoutInner = document.getElementById("kbLayoutInner");
+  if (!kbLayoutInner) {
+    console.error("kbLayoutInner not found");
+    return;
+  }
+
+  let batteryInfoContainer = document.getElementById("battery-info-container");
+  if (!batteryInfoContainer) {
+    batteryInfoContainer = createBatteryInfoContainer();
+    kbLayoutInner.appendChild(batteryInfoContainer);
+  }
+
+  if (navigator.getBattery) {
+    console.log("Battery API supported, initializing battery monitoring");
+
+    navigator
+      .getBattery()
+      .then((battery) => {
+        if (!battery) {
+          throw new Error("Battery API returned an undefined battery object.");
+        }
+        updateBatteryInfo(battery, batteryInfoContainer);
+        setupBatteryEventListeners(battery, batteryInfoContainer);
+      })
+      .catch((error) => {
+        handleBatteryError(error, batteryInfoContainer);
+      });
+  } else {
+    displayUnsupportedMessage(batteryInfoContainer);
+  }
+}
+
+export { initBatteryModule };

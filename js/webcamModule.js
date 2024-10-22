@@ -1,6 +1,5 @@
-let webcamActive = false; // State is encapsulated within the module
+let webcamActive = false;
 
-// Function to handle webcam access (we pass in videoElement)
 function webcamAccess(videoElement) {
   if (!videoElement) {
     console.error("Video element not found.");
@@ -8,9 +7,8 @@ function webcamAccess(videoElement) {
   }
 
   if (webcamActive) {
-    stopWebcam(videoElement); // Pass video element when stopping
+    stopWebcam(videoElement);
   } else {
-    // Check if getUserMedia is supported
     if (
       navigator.mediaDevices &&
       typeof navigator.mediaDevices.getUserMedia === "function"
@@ -22,7 +20,7 @@ function webcamAccess(videoElement) {
           videoElement.play().catch((playError) => {
             console.error("Error playing video:", playError);
           });
-          videoElement.style.display = "block"; // Show video element if webcam is on
+          videoElement.style.display = "block";
           webcamActive = true;
           console.log("Webcam access granted.");
         })
@@ -35,17 +33,28 @@ function webcamAccess(videoElement) {
   }
 }
 
-// Function to stop webcam (we pass in videoElement)
 function stopWebcam(videoElement) {
   const stream = videoElement.srcObject;
   if (stream) {
     stream.getTracks().forEach((track) => track.stop());
     videoElement.srcObject = null;
-    videoElement.style.display = "none"; // Hide video element when webcam is off
+    videoElement.style.display = "none";
     webcamActive = false;
     console.log("Webcam stopped.");
   }
 }
 
-// Export the functions
-export { webcamAccess, stopWebcam };
+function initWebcamModule() {
+  const videoElement = document.getElementById("video");
+  const webcamTestButton = document.getElementById("webcamTest");
+
+  webcamTestButton.addEventListener("click", () => {
+    webcamAccess(videoElement);
+  });
+
+  window.addEventListener("beforeunload", () => {
+    stopWebcam(videoElement);
+  });
+}
+
+export { initWebcamModule };

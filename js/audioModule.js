@@ -29,8 +29,6 @@ function replaceAudioElement(srcUrl, audioElement) {
   console.log("Audio recording finished.");
 }
 
-// Asynchronously handles microphone recording by accessing the device's media stream,
-// setting up the media recorder, and updating the recording status display.
 async function handleMicRecording(audioElement, recordingStatusElement) {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -55,4 +53,19 @@ function stopRecording(recordingStatusElement) {
   }
 }
 
-export { handleMicRecording, stopRecording };
+function initAudioModule() {
+  const audioElement = document.getElementById("audioRecord");
+  const startRecordingButton = document.getElementById("startRecording");
+  const stopRecordingButton = document.getElementById("stopRecording");
+  const recordingStatusElement = document.getElementById("recordingStatus");
+
+  startRecordingButton.addEventListener("click", () => {
+    handleMicRecording(audioElement, recordingStatusElement);
+  });
+
+  stopRecordingButton.addEventListener("click", () => {
+    stopRecording(recordingStatusElement);
+  });
+}
+
+export { initAudioModule };

@@ -1,3 +1,5 @@
+import { customAlertModule } from "./customAlertModule.js";
+
 let mediaRecorder;
 let recordedChunks = [];
 
@@ -41,7 +43,11 @@ async function handleMicRecording(audioElement, recordingStatusElement) {
       console.error("Failed to get microphone stream.");
     }
   } catch (error) {
-    showAlert({ message: "Error finding microphone. did you allow access?" });
+    customAlertModule().showAlert({
+      title: "Microphone Access",
+      message: "Did you allow microphone access?",
+      buttonText: "Close",
+    });
     console.error("Error accessing microphone:", error);
   }
 }

@@ -1,4 +1,4 @@
-function initAlertModule() {
+function customAlertModule() {
   const alertContainer = document.getElementById("alertContainer");
   const alertTitle = document.getElementById("alertTitle");
   const alertText = document.getElementById("alertText");
@@ -28,5 +28,4 @@ function initAlertModule() {
   return { showAlert };
 }
 
-export { initAlertModule };
-// figure out how we wanna use this with the other modules. and fix the macbook call.
+export { customAlertModule };

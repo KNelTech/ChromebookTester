@@ -1,3 +1,5 @@
+import { customAlertModule } from "./customAlertModule.js";
+
 let webcamActive = false;
 
 function webcamAccess(videoElement) {
@@ -26,6 +28,11 @@ function webcamAccess(videoElement) {
         })
         .catch((error) => {
           console.error("Error accessing webcam:", error);
+          customAlertModule().showAlert({
+            title: "Webcam Access",
+            message: "Did you allow webcam access?",
+            buttonText: "Close",
+          });
         });
     } else {
       console.error("getUserMedia not supported by this browser.");

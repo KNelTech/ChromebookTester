@@ -3,6 +3,14 @@ import { customAlertModule } from "./customAlertModule.js";
 let webcamActive = false;
 let currentStream = null;
 
+/**
+ * Request access to the selected webcam and set the video element's source
+ * to the selected webcam's stream.
+ *
+ * @param {HTMLVideoElement} videoElement - The video element to display the
+ *   webcam's stream.
+ * @param {string} selectedDeviceId - The id of the selected webcam.
+ */
 function webcamAccess(videoElement, selectedDeviceId) {
   if (!videoElement) {
     console.error("Video element not found.");
@@ -27,20 +35,16 @@ function webcamAccess(videoElement, selectedDeviceId) {
       .then(() => {
         webcamActive = true;
         console.log("Webcam access granted.");
-      })
-      .catch((error) => {
-        console.error("Error accessing or playing webcam:", error);
-        customAlertModule().showAlert({
-          title: "Webcam Access",
-          message: "Did you allow webcam access?",
-          buttonText: "Close",
-        });
       });
   } else {
     console.error("getUserMedia not supported by this browser.");
   }
 }
 
+/**
+ * Populate the webcam dropdown with options for the user to select a webcam.
+ * @param {HTMLSelectElement} dropdownElement - The element to populate.
+ */
 function populateWebcamDropdown(dropdownElement) {
   dropdownElement.length = 0;
 
@@ -92,6 +96,12 @@ function populateWebcamDropdown(dropdownElement) {
     });
 }
 
+/**
+ * Stops the webcam by stopping all tracks of the current stream, resetting
+ * the video element, and updating the webcam status.
+ *
+ * @param {HTMLVideoElement} videoElement - The video element displaying the webcam stream.
+ */
 function stopWebcam(videoElement) {
   if (currentStream) {
     currentStream.getTracks().forEach((track) => track.stop());
@@ -103,6 +113,11 @@ function stopWebcam(videoElement) {
   }
 }
 
+/**
+ * Initializes the webcam module by setting up the video element,
+ * requesting webcam access, and populating the webcam dropdown.
+ * Also adds event listeners for webcam selection and before unload actions.
+ */
 function initWebcamModule() {
   const videoEl = document.getElementById("video");
   const webcamSelect = document.getElementById("webcamDropdown");
@@ -111,12 +126,22 @@ function initWebcamModule() {
     .getUserMedia({ video: true, audio: true })
     .then(() => populateWebcamDropdown(webcamSelect))
     .catch((err) => {
-      console.error("Webcam permission denied:", err);
-      customAlertModule().showAlert({
-        title: "Webcam Permission",
-        message: "Please allow webcam access to use this feature.",
-        buttonText: "Close",
-      });
+      if (err.name === "NotFoundError") {
+        console.error("No webcam found:", err);
+        customAlertModule().showAlert({
+          title: "Webcam Not Found",
+          message:
+            "No webcam device was found on this system. Please connect a webcam and try again.",
+          buttonText: "Close",
+        });
+      } else {
+        console.error("Webcam permission denied or other error:", err);
+        customAlertModule().showAlert({
+          title: "Webcam Permission",
+          message: "Please allow webcam access to use this feature.",
+          buttonText: "Close",
+        });
+      }
     });
 
   webcamSelect.addEventListener("change", () =>

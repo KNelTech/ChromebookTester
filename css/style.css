@@ -14,10 +14,10 @@
 }
 
 * {
-  -webkit-user-select: none; /* Chrome, Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by most browsers */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #mainBody {
@@ -36,7 +36,6 @@
 
 #NavContainer {
   text-align: center;
-  /* background: linear-gradient(to left, black, #60279e); */
   background-color: #000000bb;
   display: flex;
   flex-direction: row;
@@ -458,7 +457,7 @@
 
 .index .ArrowUp,
 .index .ArrowDown {
-  margin: 0; /* Reset margin */
+  margin: 0;
 }
 
 .index .ArrowLeft {
@@ -549,16 +548,6 @@
   width: 260px;
   height: 150px;
 }
-
-/* select {
-  background: url("data:image/svg+xml,<svg height='14px' width='14px' viewBox='0 0 16 16' fill='%23a66cd2' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
-    no-repeat;
-  background-position: calc(100% - 0.75rem) center !important;
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  padding-right: 2rem !important;
-} */
 
 select:focus {
   outline: none;

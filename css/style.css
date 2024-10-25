@@ -159,7 +159,10 @@
 #video {
   width: 640px;
   height: 480px;
+  box-shadow: 0 0 5px 2px #60279e;
+  border: 1px solid #60279e;
   border-radius: 15px;
+  object-fit: cover;
 }
 
 #testingContainer > button {

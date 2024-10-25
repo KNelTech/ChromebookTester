@@ -159,6 +159,7 @@
 #video {
   width: 640px;
   height: 480px;
+  border-radius: 15px;
 }
 
 #testingContainer > button {
@@ -415,14 +416,12 @@
 
 /* video */
 
-.videoWrapper video,
 .videoWrapper video {
-  width: 230px;
-  height: 153px;
-}
-
-.index .videoWrapper video {
-  border-radius: 10px;
+  width: 225px;
+  height: 149px;
+  box-shadow: 0 0 4px 1px #60279e;
+  border: 1px solid #60279e;
+  border-radius: 8px;
 }
 
 .index .videoWrapper {

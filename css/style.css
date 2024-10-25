@@ -371,7 +371,7 @@
   box-shadow: 0 0 4px 1px #60279e;
   border: 1px solid #60279e;
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 15px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   width: 260px;
@@ -421,7 +421,7 @@
   height: 149px;
   box-shadow: 0 0 4px 1px #60279e;
   border: 1px solid #60279e;
-  border-radius: 8px;
+  border-radius: 15px;
 }
 
 .index .videoWrapper {

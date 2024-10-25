@@ -420,11 +420,12 @@
 /* video */
 
 .videoWrapper video {
-  width: 225px;
+  width: 224px;
   height: 149px;
   box-shadow: 0 0 4px 1px #60279e;
   border: 1px solid #60279e;
   border-radius: 15px;
+  object-fit: cover;
 }
 
 .index .videoWrapper {
